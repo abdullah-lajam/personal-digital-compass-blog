@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +90,22 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
+  }
+
+  .blog-card {
+    @apply overflow-hidden rounded-lg border bg-card transition-all duration-300 hover:shadow-md hover:translate-y-[-2px];
+  }
+
+  .blog-tag {
+    @apply inline-flex items-center rounded-full bg-blog-muted px-3 py-1 text-sm text-blog-dark mx-1 mb-2;
+  }
+
+  .blog-container {
+    @apply container mx-auto px-4 md:px-6 py-8 md:py-12;
   }
 }

@@ -19,10 +19,8 @@
         }
       }(window.location))
       
-      // Redirect to index.html with correct base path for the repository
-      const pathSegmentsToKeep = 1;
-      const redirectUrl = window.location.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/';
-      window.location.replace(redirectUrl);
+      // Direct redirect to the root of the app with the correct base path
+      window.location.replace("/personal-digital-compass-blog/");
     </script>
   </head>
   <body>

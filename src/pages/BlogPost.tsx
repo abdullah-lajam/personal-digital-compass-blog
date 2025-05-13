@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -19,7 +19,8 @@ const allPosts: Record<string, Record<string, BlogPost>> = {
       categorySlug: 'ai',
       slug: 'ai-future-of-work',
       coverImage: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80',
-      tags: ['ذكاء-اصطناعي', 'مستقبل-العمل', 'تكنولوجيا']
+      tags: ['ذكاء-اصطناعي', 'مستقبل-العمل', 'تكنولوجيا'],
+      htmlFile: '/content/ai/ai-future-of-work.html'
     },
     'evaluating-generative-ai': {
       id: '6',
@@ -30,7 +31,20 @@ const allPosts: Record<string, Record<string, BlogPost>> = {
       categorySlug: 'ai',
       slug: 'evaluating-generative-ai',
       coverImage: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80',
-      tags: ['ذكاء-اصطناعي', 'تعلم-آلي', 'تقنية']
+      tags: ['ذكاء-اصطناعي', 'تعلم-آلي', 'تقنية'],
+      htmlFile: '/content/ai/evaluating-generative-ai.html'
+    },
+    'ai-ethics': {
+      id: '10',
+      title: 'أخلاقيات الذكاء الاصطناعي',
+      excerpt: 'مناقشة القضايا الأخلاقية المتعلقة بتطوير واستخدام تقنيات الذكاء الاصطناعي وكيفية معالجتها.',
+      date: '5 أبريل 2025',
+      category: 'الذكاء الاصطناعي',
+      categorySlug: 'ai',
+      slug: 'ai-ethics',
+      coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
+      tags: ['أخلاقيات', 'ذكاء-اصطناعي', 'تكنولوجيا'],
+      htmlFile: '/content/ai/ai-ethics.html'
     }
   },
   'e-learning': {
@@ -67,10 +81,40 @@ const sampleContent = `
 
 const BlogPostPage: React.FC = () => {
   const { categorySlug, postSlug } = useParams<{ categorySlug: string; postSlug: string }>();
+  const [htmlContent, setHtmlContent] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   
   const post = categorySlug && postSlug && allPosts[categorySlug] 
     ? allPosts[categorySlug][postSlug] 
     : null;
+
+  useEffect(() => {
+    if (post?.htmlFile) {
+      setIsLoading(true);
+      fetch(post.htmlFile)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('فشل تحميل المحتوى');
+          }
+          return response.text();
+        })
+        .then(html => {
+          // استخراج محتوى الـ body فقط من ملف HTML
+          const bodyContent = html.match(/<body[^>]*>([\s\S]*)<\/body>/i)?.[1] || html;
+          setHtmlContent(bodyContent);
+          setError(null);
+        })
+        .catch(err => {
+          console.error('خطأ في تحميل المحتوى:', err);
+          setError('حدث خطأ أثناء تحميل المحتوى. يرجى المحاولة مرة أخرى.');
+          setHtmlContent('');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [post]);
 
   if (!post) {
     return (
@@ -123,7 +167,23 @@ const BlogPostPage: React.FC = () => {
             </Link>
           </div>
           
-          <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: sampleContent }} />
+          {isLoading && (
+            <div className="py-8 text-center">
+              <p>جاري تحميل المحتوى...</p>
+            </div>
+          )}
+          
+          {error && (
+            <div className="py-8 text-center text-red-500">
+              <p>{error}</p>
+            </div>
+          )}
+          
+          {!isLoading && !error && (
+            <div className="prose prose-lg max-w-none" 
+              dangerouslySetInnerHTML={{ __html: post.htmlFile ? htmlContent : sampleContent }} 
+            />
+          )}
           
           <div className="flex flex-wrap mt-8 pt-6 border-t">
             {post.tags.map((tag, index) => (

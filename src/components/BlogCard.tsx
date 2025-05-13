@@ -13,6 +13,7 @@ export interface BlogPost {
   slug: string;
   coverImage: string;
   tags: string[];
+  htmlFile?: string; // مسار ملف HTML خارجي (اختياري)
 }
 
 interface BlogCardProps {

@@ -35,7 +35,8 @@ const postsByCategory: Record<string, BlogPost[]> = {
       categorySlug: 'ai',
       slug: 'ai-future-of-work',
       coverImage: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80',
-      tags: ['ذكاء-اصطناعي', 'مستقبل-العمل', 'تكنولوجيا']
+      tags: ['ذكاء-اصطناعي', 'مستقبل-العمل', 'تكنولوجيا'],
+      htmlFile: '/content/ai/ai-future-of-work.html'
     },
     {
       id: '6',
@@ -46,7 +47,8 @@ const postsByCategory: Record<string, BlogPost[]> = {
       categorySlug: 'ai',
       slug: 'evaluating-generative-ai',
       coverImage: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800&q=80',
-      tags: ['ذكاء-اصطناعي', 'تعلم-آلي', 'تقنية']
+      tags: ['ذكاء-اصطناعي', 'تعلم-آلي', 'تقنية'],
+      htmlFile: '/content/ai/evaluating-generative-ai.html'
     },
     {
       id: '10',
@@ -57,7 +59,8 @@ const postsByCategory: Record<string, BlogPost[]> = {
       categorySlug: 'ai',
       slug: 'ai-ethics',
       coverImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
-      tags: ['أخلاقيات', 'ذكاء-اصطناعي', 'تكنولوجيا']
+      tags: ['أخلاقيات', 'ذكاء-اصطناعي', 'تكنولوجيا'],
+      htmlFile: '/content/ai/ai-ethics.html'
     }
   ],
   'e-learning': [

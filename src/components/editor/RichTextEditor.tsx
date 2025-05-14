@@ -10,7 +10,7 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import Underline from '@tiptap/extension-underline';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { lowlight } from 'lowlight';
+import { common, createLowlight } from 'lowlight';
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { 
   Bold, Italic, Underline as UnderlineIcon, 
   Code, Image as ImageIcon, Link as LinkIcon, 
-  List, ListOrdered, Quote, Undo, Redo,
+  ListOrdered, List, Quote, Undo, Redo,
   Code as CodeIcon
 } from "lucide-react";
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -49,6 +49,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>('https://');
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+  // Initialize lowlight
+  const lowlight = createLowlight(common);
 
   // Initialize TipTap editor
   const editor = useEditor({
@@ -126,7 +129,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     if (!editor) return;
     
     if (imageUrl) {
-      editor.chain().focus().setImage({ src: imageUrl }).run();
+      editor.commands.insertContent(`<img src="${imageUrl}" alt="Image" />`);
     }
     
     setImageDialogOpen(false);

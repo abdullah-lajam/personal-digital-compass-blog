@@ -27,41 +27,49 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ChevronDown, Edit, EyeIcon, Plus, Trash } from "lucide-react";
-import { allPosts } from "@/utils/blogData";
-import { BlogPost } from "@/components/BlogCard";
+import { useToast } from "@/hooks/use-toast";
+import { PostWithContent, deletePost, getAllPosts } from "@/utils/blogDatabase";
 
 const AdminPosts: React.FC = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null);
-
-  // Convert nested object structure to flat array
-  const postsArray: BlogPost[] = Object.values(allPosts)
-    .flatMap((categoryPosts) => Object.values(categoryPosts));
+  const [postToDelete, setPostToDelete] = useState<PostWithContent | null>(null);
+  const [posts, setPosts] = useState<PostWithContent[]>(getAllPosts());
 
   // Filter posts by search query
-  const filteredPosts = postsArray.filter(
+  const filteredPosts = posts.filter(
     (post) =>
       post.title.includes(searchQuery) ||
       post.excerpt.includes(searchQuery) ||
       post.category.includes(searchQuery)
   );
 
-  const handleDeleteClick = (post: BlogPost) => {
+  const handleDeleteClick = (post: PostWithContent) => {
     setPostToDelete(post);
     setDeleteDialogOpen(true);
   };
 
   const handleDeleteConfirm = () => {
-    // This is just a mock - will be replaced with actual delete functionality
-    // when we integrate with a database
-    console.log("Delete post:", postToDelete);
+    if (postToDelete) {
+      try {
+        deletePost(postToDelete.id);
+        setPosts(getAllPosts());
+        toast({
+          title: "تم حذف المقال",
+          description: `تم حذف المقال "${postToDelete.title}" بنجاح`,
+        });
+      } catch (error) {
+        toast({
+          title: "خطأ",
+          description: "حدث خطأ أثناء محاولة حذف المقال",
+          variant: "destructive",
+        });
+      }
+    }
     setDeleteDialogOpen(false);
     setPostToDelete(null);
-    
-    // Show a toast message that the action is not available in the demo
-    // (We'll implement actual deletion when we connect to a database)
   };
 
   return (

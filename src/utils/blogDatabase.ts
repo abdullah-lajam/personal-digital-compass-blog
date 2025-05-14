@@ -73,7 +73,7 @@ export const deletePost = (id: string): boolean => {
   }
   
   // Remove the post from local storage
-  localStorage.removeItem(`post_${post.id}`);
+  localStorage.removeItem(`post_${existingPost.id}`);
   
   return true;
 };

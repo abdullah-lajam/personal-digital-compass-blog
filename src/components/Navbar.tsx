@@ -1,74 +1,94 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, BookOpen } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Menu, X, Settings } from 'lucide-react';
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+// قائمة بالروابط في شريط التنقل
+const navLinks = [
+  { text: "الرئيسية", path: "/" },
+  { text: "الذكاء الاصطناعي", path: "/ai" },
+  { text: "التعليم الإلكتروني", path: "/e-learning" },
+  { text: "إدارة الأعمال", path: "/business" },
+  { text: "إنسانيات", path: "/humanities" },
+  { text: "عن المدونة", path: "/about" },
+];
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const categories = [
-    { name: 'الذكاء الاصطناعي', path: '/ai' },
-    { name: 'التعليم الإلكتروني', path: '/e-learning' },
-    { name: 'إدارة الأعمال', path: '/business' },
-    { name: 'إنسانيات', path: '/humanities' },
-    { name: 'تدوينات متفرقة', path: '/misc' },
-  ];
+const Navbar: React.FC = () => {
+  // حالة لمعرفة إذا كانت القائمة المنسدلة مفتوحة على الهواتف
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm border-b">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <BookOpen className="h-6 w-6 text-blog-primary" />
-              <span className="mr-2 text-xl font-heading font-bold text-blog-dark">مدونتي الرقمية</span>
-            </Link>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-4 space-x-reverse">
-            {categories.map((category) => (
-              <Link
-                key={category.path}
-                to={category.path}
-                className="px-3 py-2 text-blog-dark hover:text-blog-primary transition-colors font-medium"
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
+        <div className="mr-4 hidden md:flex">
+          <Link to="/" className="text-2xl font-bold">المدونة</Link>
+        </div>
+        
+        <div className="flex md:hidden">
+          <Button variant="ghost" size="icon" className="mr-2" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+          <Link to="/" className="mr-2 text-xl font-bold">المدونة</Link>
+        </div>
+        
+        <div className="flex flex-1 items-center justify-between space-x-2 space-x-reverse md:justify-end">
+          <nav className="hidden md:flex items-center space-x-4 space-x-reverse">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path}
+                to={link.path}
+                className="text-foreground/60 transition-colors hover:text-foreground"
               >
-                {category.name}
+                {link.text}
               </Link>
             ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={toggleMenu}>
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
+          </nav>
+          
+          <div className="flex-1 flex justify-end items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Settings className="h-5 w-5" />
+                  <span className="sr-only">إعدادات</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link to="/admin/login">لوحة التحكم</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-3 animate-fade-in">
-            <div className="flex flex-col">
-              {categories.map((category) => (
+      </div>
+      
+      {/* قائمة الهاتف المحمول */}
+      {isOpen && (
+        <div className="md:hidden border-t">
+          <div className="container py-4">
+            <nav className="grid gap-2">
+              {navLinks.map((link) => (
                 <Link
-                  key={category.path}
-                  to={category.path}
-                  className="block px-3 py-2 text-blog-dark hover:bg-blog-muted rounded-md mb-1 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
+                  key={link.path}
+                  to={link.path}
+                  className="flex items-center py-2 text-lg"
+                  onClick={() => setIsOpen(false)}
                 >
-                  {category.name}
+                  {link.text}
                 </Link>
               ))}
-            </div>
+            </nav>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      )}
+    </header>
   );
 };
 

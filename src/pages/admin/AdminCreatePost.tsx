@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   Form,
@@ -25,7 +24,11 @@ import { createPost, getAllCategories } from "@/utils/blogDatabase";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader, Save } from "lucide-react";
+import { Loader, Save, ImageIcon } from "lucide-react";
+import { RichTextEditor } from "@/components/editor/RichTextEditor";
+import { MediaLibrary } from "@/components/editor/MediaLibrary";
+import { MediaItem } from "@/utils/mediaLibrary";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const formSchema = z.object({
   title: z.string().min(5, { message: "العنوان يجب أن يكون على الأقل 5 أحرف" }),
@@ -40,6 +43,10 @@ const AdminCreatePost: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMediaLibraryOpen, setIsMediaLibraryOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [draftKey] = useState(`post_draft_${Date.now()}`);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   
   const categories = getAllCategories();
   
@@ -54,6 +61,48 @@ const AdminCreatePost: React.FC = () => {
       tags: "",
     },
   });
+  
+  // Load draft on component mount
+  React.useEffect(() => {
+    const savedDraft = localStorage.getItem(draftKey);
+    if (savedDraft) {
+      try {
+        const draftData = JSON.parse(savedDraft);
+        form.reset(draftData);
+        if (draftData.coverImage) {
+          setSelectedImage(draftData.coverImage);
+        }
+        toast({
+          title: "تم استعادة المسودة",
+          description: "تم استعادة آخر مسودة محفوظة",
+        });
+      } catch (error) {
+        console.error("Error loading draft:", error);
+      }
+    }
+  }, [draftKey, form, toast]);
+
+  // Save draft periodically
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const values = form.getValues();
+      localStorage.setItem(draftKey, JSON.stringify(values));
+      setLastSaved(new Date());
+    }, 30000); // Save every 30 seconds
+    
+    return () => clearInterval(interval);
+  }, [draftKey, form]);
+
+  // Save draft manually
+  const handleSaveDraft = () => {
+    const values = form.getValues();
+    localStorage.setItem(draftKey, JSON.stringify(values));
+    setLastSaved(new Date());
+    toast({
+      title: "تم حفظ المسودة",
+      description: "تم حفظ المسودة بنجاح",
+    });
+  };
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
@@ -88,6 +137,9 @@ const AdminCreatePost: React.FC = () => {
       
       createPost(newPost);
       
+      // Clear draft after successful submission
+      localStorage.removeItem(draftKey);
+      
       toast({
         title: "تم إنشاء المقال",
         description: "تم إنشاء المقال بنجاح",
@@ -104,6 +156,12 @@ const AdminCreatePost: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Handle media selection from library
+  const handleMediaSelect = (mediaItem: MediaItem) => {
+    form.setValue("coverImage", mediaItem.url, { shouldValidate: true });
+    setSelectedImage(mediaItem.url);
   };
 
   return (
@@ -132,10 +190,12 @@ const AdminCreatePost: React.FC = () => {
                 <FormItem>
                   <FormLabel>مقتطف المقال</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="أدخل مقتطف المقال هنا (سيظهر في صفحة العرض الرئيسية)" 
-                      rows={3}
-                      {...field} 
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="أدخل مقتطف المقال هنا (سيظهر في صفحة العرض الرئيسية)"
+                      autoSave={false}
+                      showHtmlEditor={false}
                     />
                   </FormControl>
                   <FormMessage />
@@ -150,10 +210,13 @@ const AdminCreatePost: React.FC = () => {
                 <FormItem>
                   <FormLabel>محتوى المقال</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="أدخل محتوى المقال هنا" 
-                      rows={12} 
-                      {...field} 
+                    <RichTextEditor 
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="أدخل محتوى المقال هنا"
+                      autoSave={true}
+                      className="min-h-[400px]"
+                      showHtmlEditor={true}
                     />
                   </FormControl>
                   <FormMessage />
@@ -195,10 +258,33 @@ const AdminCreatePost: React.FC = () => {
                 name="coverImage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>رابط صورة الغلاف</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://example.com/image.jpg" {...field} />
-                    </FormControl>
+                    <FormLabel>صورة الغلاف</FormLabel>
+                    <div className="space-y-3">
+                      {selectedImage && (
+                        <div className="border rounded-md overflow-hidden">
+                          <AspectRatio ratio={16 / 9}>
+                            <img
+                              src={selectedImage}
+                              alt="صورة الغلاف"
+                              className="w-full h-full object-cover"
+                            />
+                          </AspectRatio>
+                        </div>
+                      )}
+                      <div className="flex gap-2">
+                        <FormControl className="flex-1">
+                          <Input placeholder="https://example.com/image.jpg" {...field} />
+                        </FormControl>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setIsMediaLibraryOpen(true)}
+                        >
+                          <ImageIcon className="h-4 w-4 ml-2" />
+                          اختر من المكتبة
+                        </Button>
+                      </div>
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -219,30 +305,53 @@ const AdminCreatePost: React.FC = () => {
               )}
             />
             
-            <div className="flex justify-end gap-4">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => navigate("/admin/posts")}
-              >
-                إلغاء
-              </Button>
-              <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader className="ml-2 h-4 w-4 animate-spin" />
-                    جاري الحفظ...
-                  </>
-                ) : (
-                  <>
-                    <Save className="ml-2 h-4 w-4" />
-                    حفظ المقال
-                  </>
+            <div className="flex justify-between flex-wrap gap-4 items-center pt-4">
+              <div>
+                {lastSaved && (
+                  <p className="text-sm text-muted-foreground">
+                    آخر حفظ تلقائي: {lastSaved.toLocaleTimeString()}
+                  </p>
                 )}
-              </Button>
+              </div>
+              <div className="flex gap-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/admin/posts")}
+                >
+                  إلغاء
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleSaveDraft}
+                  disabled={isSubmitting}
+                >
+                  حفظ كمسودة
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader className="ml-2 h-4 w-4 animate-spin" />
+                      جاري الحفظ...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="ml-2 h-4 w-4" />
+                      نشر المقال
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
           </form>
         </Form>
+        
+        <MediaLibrary
+          isOpen={isMediaLibraryOpen}
+          onOpenChange={setIsMediaLibraryOpen}
+          onSelect={handleMediaSelect}
+        />
       </div>
     </AdminLayout>
   );

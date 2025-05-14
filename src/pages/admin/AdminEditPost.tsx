@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   Form,
@@ -26,7 +25,11 @@ import { getAllCategories, getPostById, updatePost } from "@/utils/blogDatabase"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Loader, Save } from "lucide-react";
+import { Loader, Save, ImageIcon } from "lucide-react";
+import { RichTextEditor } from "@/components/editor/RichTextEditor";
+import { MediaLibrary } from "@/components/editor/MediaLibrary";
+import { MediaItem } from "@/utils/mediaLibrary";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const formSchema = z.object({
   title: z.string().min(5, { message: "العنوان يجب أن يكون على الأقل 5 أحرف" }),
@@ -43,6 +46,10 @@ const AdminEditPost: React.FC = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isMediaLibraryOpen, setIsMediaLibraryOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [draftKey, setDraftKey] = useState<string>("");
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   
   const categories = getAllCategories();
   
@@ -60,7 +67,25 @@ const AdminEditPost: React.FC = () => {
   
   useEffect(() => {
     if (postId) {
+      setDraftKey(`post_edit_draft_${postId}`);
+      
       try {
+        // Try to load from draft first
+        const savedDraft = localStorage.getItem(`post_edit_draft_${postId}`);
+        if (savedDraft) {
+          const draftData = JSON.parse(savedDraft);
+          form.reset(draftData);
+          setSelectedImage(draftData.coverImage);
+          setIsLoading(false);
+          
+          toast({
+            title: "تم استعادة المسودة",
+            description: "تم استعادة آخر مسودة محفوظة",
+          });
+          return;
+        }
+        
+        // If no draft, load from database
         const post = getPostById(postId);
         if (post) {
           form.reset({
@@ -71,6 +96,7 @@ const AdminEditPost: React.FC = () => {
             coverImage: post.coverImage,
             tags: post.tags?.join(", ") || "",
           });
+          setSelectedImage(post.coverImage);
         } else {
           toast({
             title: "خطأ",
@@ -91,6 +117,32 @@ const AdminEditPost: React.FC = () => {
       }
     }
   }, [postId, form, navigate, toast]);
+  
+  // Save draft periodically
+  React.useEffect(() => {
+    if (!draftKey) return;
+    
+    const interval = setInterval(() => {
+      const values = form.getValues();
+      localStorage.setItem(draftKey, JSON.stringify(values));
+      setLastSaved(new Date());
+    }, 30000); // Save every 30 seconds
+    
+    return () => clearInterval(interval);
+  }, [draftKey, form]);
+
+  // Save draft manually
+  const handleSaveDraft = () => {
+    if (!draftKey) return;
+    
+    const values = form.getValues();
+    localStorage.setItem(draftKey, JSON.stringify(values));
+    setLastSaved(new Date());
+    toast({
+      title: "تم حفظ المسودة",
+      description: "تم حفظ المسودة بنجاح",
+    });
+  };
   
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!postId) return;
@@ -129,6 +181,9 @@ const AdminEditPost: React.FC = () => {
       
       updatePost(updatedPost);
       
+      // Clear draft after successful update
+      localStorage.removeItem(draftKey);
+      
       toast({
         title: "تم تحديث المقال",
         description: "تم تحديث المقال بنجاح",
@@ -145,6 +200,12 @@ const AdminEditPost: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Handle media selection from library
+  const handleMediaSelect = (mediaItem: MediaItem) => {
+    form.setValue("coverImage", mediaItem.url, { shouldValidate: true });
+    setSelectedImage(mediaItem.url);
   };
 
   return (
@@ -185,10 +246,12 @@ const AdminEditPost: React.FC = () => {
                   <FormItem>
                     <FormLabel>مقتطف المقال</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="أدخل مقتطف المقال هنا (سيظهر في صفحة العرض الرئيسية)" 
-                        rows={3}
-                        {...field} 
+                      <RichTextEditor
+                        content={field.value}
+                        onChange={field.onChange}
+                        placeholder="أدخل مقتطف المقال هنا (سيظهر في صفحة العرض الرئيسية)"
+                        autoSave={false}
+                        showHtmlEditor={false}
                       />
                     </FormControl>
                     <FormMessage />
@@ -203,10 +266,13 @@ const AdminEditPost: React.FC = () => {
                   <FormItem>
                     <FormLabel>محتوى المقال</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="أدخل محتوى المقال هنا" 
-                        rows={12} 
-                        {...field} 
+                      <RichTextEditor 
+                        content={field.value}
+                        onChange={field.onChange}
+                        placeholder="أدخل محتوى المقال هنا"
+                        autoSave={true}
+                        className="min-h-[400px]"
+                        showHtmlEditor={true}
                       />
                     </FormControl>
                     <FormMessage />
@@ -248,10 +314,33 @@ const AdminEditPost: React.FC = () => {
                   name="coverImage"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>رابط صورة الغلاف</FormLabel>
-                      <FormControl>
-                        <Input placeholder="https://example.com/image.jpg" {...field} />
-                      </FormControl>
+                      <FormLabel>صورة الغلاف</FormLabel>
+                      <div className="space-y-3">
+                        {selectedImage && (
+                          <div className="border rounded-md overflow-hidden">
+                            <AspectRatio ratio={16 / 9}>
+                              <img
+                                src={selectedImage}
+                                alt="صورة الغلاف"
+                                className="w-full h-full object-cover"
+                              />
+                            </AspectRatio>
+                          </div>
+                        )}
+                        <div className="flex gap-2">
+                          <FormControl className="flex-1">
+                            <Input placeholder="https://example.com/image.jpg" {...field} />
+                          </FormControl>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => setIsMediaLibraryOpen(true)}
+                          >
+                            <ImageIcon className="h-4 w-4 ml-2" />
+                            اختر من المكتبة
+                          </Button>
+                        </div>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -272,31 +361,54 @@ const AdminEditPost: React.FC = () => {
                 )}
               />
               
-              <div className="flex justify-end gap-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => navigate("/admin/posts")}
-                >
-                  إلغاء
-                </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? (
-                    <>
-                      <Loader className="ml-2 h-4 w-4 animate-spin" />
-                      جاري الحفظ...
-                    </>
-                  ) : (
-                    <>
-                      <Save className="ml-2 h-4 w-4" />
-                      حفظ التغييرات
-                    </>
+              <div className="flex justify-between flex-wrap gap-4 items-center pt-4">
+                <div>
+                  {lastSaved && (
+                    <p className="text-sm text-muted-foreground">
+                      آخر حفظ تلقائي: {lastSaved.toLocaleTimeString()}
+                    </p>
                   )}
-                </Button>
+                </div>
+                <div className="flex gap-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => navigate("/admin/posts")}
+                  >
+                    إلغاء
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={handleSaveDraft}
+                    disabled={isSubmitting}
+                  >
+                    حفظ كمسودة
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader className="ml-2 h-4 w-4 animate-spin" />
+                        جاري الحفظ...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="ml-2 h-4 w-4" />
+                        حفظ التغييرات
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
             </form>
           </Form>
         )}
+        
+        <MediaLibrary
+          isOpen={isMediaLibraryOpen}
+          onOpenChange={setIsMediaLibraryOpen}
+          onSelect={handleMediaSelect}
+        />
       </div>
     </AdminLayout>
   );

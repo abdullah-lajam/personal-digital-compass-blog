@@ -21,7 +21,7 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 const queryClient = new QueryClient();
 
 const App = () => {
-  console.log("App is rendering, base path: /personal-digital-compass-blog");
+  console.log("App is rendering, base path: /");
   
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,7 +29,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter basename="/personal-digital-compass-blog">
+          <BrowserRouter basename="/">
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Index />} />

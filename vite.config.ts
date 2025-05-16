@@ -11,7 +11,7 @@ if (!globalThis.crypto) {
 }
 
 export default defineConfig(({ mode }) => ({
-  base: '/personal-digital-compass-blog/',
+  base: '/',
   server: {
     host: '::',
     port: 8080,

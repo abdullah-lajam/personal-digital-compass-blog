@@ -7,7 +7,7 @@ import BlogPostHeader from '../components/BlogPostHeader';
 import BlogPostContent from '../components/BlogPostContent';
 import BlogPostFooter from '../components/BlogPostFooter';
 import PostNotFound from '../components/PostNotFound';
-import { PostWithContent, getPostById } from '../utils/blogDatabase';
+import { PostWithContent, getPostById, getAllPosts } from '../utils/blogDatabase';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const BlogPostPage: React.FC = () => {
@@ -20,12 +20,23 @@ const BlogPostPage: React.FC = () => {
       setIsLoading(true);
       
       if (categorySlug && postSlug) {
-        // In a real implementation with a database, we would fetch by slug
-        // For now, we're using our mock database to find the post
+        // First check for locally stored posts
         try {
-          const posts = Array.from({ length: 10 }, (_, i) => i + 1).map(id => getPostById(id.toString())).filter(Boolean);
-          const foundPost = posts.find(p => p?.categorySlug === categorySlug && p?.slug === postSlug) || null;
+          // Get all posts including those from mock data and localStorage
+          const allPosts = getAllPosts();
+          
+          // Find post matching the category and slug
+          const foundPost = allPosts.find(p => 
+            p?.categorySlug === categorySlug && p?.slug === postSlug
+          ) || null;
+          
           setPost(foundPost);
+          
+          if (foundPost) {
+            console.log("Post found:", foundPost.title);
+          } else {
+            console.log("Post not found for", categorySlug, postSlug);
+          }
         } catch (error) {
           console.error("Error loading post:", error);
           setPost(null);

@@ -16,6 +16,8 @@ const Index = () => {
     // Get all posts including those from localStorage
     const allPosts = getAllPosts();
     
+    console.log("Index page loaded posts:", allPosts.length);
+    
     // Sort posts by date (newest first)
     const sortedPosts = [...allPosts].sort((a, b) => {
       // Try to create Date objects, if that fails use string comparison
@@ -28,6 +30,8 @@ const Index = () => {
         return b.date.localeCompare(a.date);
       }
     });
+    
+    console.log("Sorted posts:", sortedPosts.map(p => p.title));
     
     // Set featured posts (first 3)
     setFeaturedPosts(sortedPosts.slice(0, 3));

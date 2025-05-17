@@ -28,7 +28,10 @@ const getLocalStoragePosts = (): PostWithContent[] => {
         const postJson = localStorage.getItem(key);
         if (postJson) {
           const post = JSON.parse(postJson);
-          posts.push(post);
+          // Ensure we're not processing draft posts
+          if (!key.includes('draft_')) {
+            posts.push(post);
+          }
         }
       } catch (error) {
         console.error(`Error parsing post from localStorage (${key}):`, error);
@@ -36,6 +39,7 @@ const getLocalStoragePosts = (): PostWithContent[] => {
     }
   }
   
+  console.log("Local storage posts found:", posts.length);
   return posts;
 };
 
@@ -60,14 +64,19 @@ export const getAllPosts = (): PostWithContent[] => {
   const mockPosts = getPostsArray();
   const localPosts = getLocalStoragePosts();
   
-  // Combine both arrays
-  return [...mockPosts, ...localPosts];
+  // Combine both arrays and log for debugging
+  const allPosts = [...mockPosts, ...localPosts];
+  console.log("Total posts loaded:", allPosts.length, "Mock:", mockPosts.length, "Local:", localPosts.length);
+  
+  return allPosts;
 };
 
 // Get posts by category
 export const getPostsByCategory = (categorySlug: string): PostWithContent[] => {
   const allPosts = getAllPosts();
-  return allPosts.filter(post => post.categorySlug === categorySlug);
+  const filteredPosts = allPosts.filter(post => post.categorySlug === categorySlug);
+  console.log(`Posts for category ${categorySlug}:`, filteredPosts.length);
+  return filteredPosts;
 };
 
 // Create a new post

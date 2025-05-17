@@ -19,7 +19,7 @@ const Hero = () => {
             <Button asChild className="bg-white text-blog-primary hover:bg-gray-100">
               <Link to="/about">تعرف علي <ArrowRight className="mr-2 h-4 w-4" /></Link>
             </Button>
-            <Button asChild variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
+            <Button asChild className="bg-transparent text-white border-white hover:bg-white/10">
               <Link to="/ai">استكشف المقالات</Link>
             </Button>
           </div>

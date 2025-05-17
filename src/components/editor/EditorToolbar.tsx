@@ -1,15 +1,15 @@
 
 import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Code } from "lucide-react";
-import { toolbarButtons, ToolbarButtonType } from './editor-constants';
-import { Editor } from '@tiptap/react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Bold, Italic, Underline, Link as LinkIcon, Image, List, ListOrdered, Quote, Code, Undo, Redo, FileCode } from 'lucide-react';
+import { type Editor } from '@tiptap/react';
+import { editor_constants } from './editor-constants';
 
 interface EditorToolbarProps {
   editor: Editor;
-  showHtmlEditor: boolean;
+  showHtmlEditor?: boolean;
   showHtml: boolean;
   onToggleHtml: () => void;
   onToolbarAction: (action: string) => void;
@@ -17,67 +17,61 @@ interface EditorToolbarProps {
 
 export const EditorToolbar: React.FC<EditorToolbarProps> = ({
   editor,
-  showHtmlEditor,
+  showHtmlEditor = true,
   showHtml,
   onToggleHtml,
   onToolbarAction,
 }) => {
-  // Group buttons into sections
-  const formatButtons: ToolbarButtonType[] = toolbarButtons.slice(0, 3);
-  const insertButtons: ToolbarButtonType[] = toolbarButtons.slice(3, 5);
-  const listButtons: ToolbarButtonType[] = toolbarButtons.slice(5, 9);
-  const historyButtons: ToolbarButtonType[] = toolbarButtons.slice(9);
-  
-  const renderButton = (button: ToolbarButtonType) => {
-    const ButtonIcon = button.icon;
-    const isActive = button.isActive ? button.isActive(editor) : false;
-    const isDisabled = button.name === 'undo' ? !editor.can().undo() : 
-                       button.name === 'redo' ? !editor.can().redo() : 
-                       false;
-    
-    return (
-      <Button 
-        key={button.name}
-        type="button" 
-        variant="ghost" 
-        size="icon" 
-        onClick={() => onToolbarAction(button.action)}
-        className={isActive ? 'bg-muted' : ''}
-        disabled={isDisabled}
-      >
-        <ButtonIcon size={18} />
-      </Button>
-    );
-  };
-  
+  if (!editor) {
+    return null;
+  }
+
+  const toolbarItems = [
+    { action: 'toggleBold', icon: <Bold className="h-4 w-4" />, isActive: editor.isActive('bold') },
+    { action: 'toggleItalic', icon: <Italic className="h-4 w-4" />, isActive: editor.isActive('italic') },
+    { action: 'toggleUnderline', icon: <Underline className="h-4 w-4" />, isActive: editor.isActive('underline') },
+    { action: 'link', icon: <LinkIcon className="h-4 w-4" />, isActive: editor.isActive('link') },
+    { action: 'image', icon: <Image className="h-4 w-4" />, isActive: false },
+    { action: 'toggleBulletList', icon: <List className="h-4 w-4" />, isActive: editor.isActive('bulletList') },
+    { action: 'toggleOrderedList', icon: <ListOrdered className="h-4 w-4" />, isActive: editor.isActive('orderedList') },
+    { action: 'toggleBlockquote', icon: <Quote className="h-4 w-4" />, isActive: editor.isActive('blockquote') },
+    { action: 'toggleCodeBlock', icon: <Code className="h-4 w-4" />, isActive: editor.isActive('codeBlock') },
+    { action: 'undo', icon: <Undo className="h-4 w-4" />, isActive: false },
+    { action: 'redo', icon: <Redo className="h-4 w-4" />, isActive: false },
+  ];
+
   return (
-    <div className={cn("editor-toolbar flex flex-wrap items-center gap-1 p-2 border-b bg-muted/30")}>
-      {formatButtons.map(renderButton)}
-      
-      <Separator orientation="vertical" className="h-6" />
-      
-      {insertButtons.map(renderButton)}
-      
-      <Separator orientation="vertical" className="h-6" />
-      
-      {listButtons.map(renderButton)}
-      
-      <Separator orientation="vertical" className="h-6" />
-      
-      {historyButtons.map(renderButton)}
-      
+    <div className="border-b bg-muted/40 px-3 py-2 flex flex-wrap gap-1">
+      {toolbarItems.map((item) => (
+        <Button
+          key={item.action}
+          type="button"
+          variant={item.isActive ? "secondary" : "ghost"}
+          size="icon"
+          onClick={() => onToolbarAction(item.action)}
+          className={cn("h-8 w-8 p-0", item.isActive && "bg-muted")}
+          disabled={
+            (item.action === 'undo' && !editor.can().chain().focus().undo().run()) || 
+            (item.action === 'redo' && !editor.can().chain().focus().redo().run())
+          }
+        >
+          {item.icon}
+          <span className="sr-only">{editor_constants[item.action] || item.action}</span>
+        </Button>
+      ))}
+
       {showHtmlEditor && (
         <>
-          <Separator orientation="vertical" className="h-6 mr-auto" />
-          <Button 
-            type="button" 
-            variant="outline" 
-            size="sm" 
+          <Separator orientation="vertical" className="mx-1 h-8" />
+          <Button
+            type="button"
+            variant={showHtml ? "secondary" : "ghost"}
+            size="sm"
             onClick={onToggleHtml}
-            className="mr-1"
+            className="gap-1 h-8"
           >
-            <Code className="mr-2" size={16} />
-            {showHtml ? 'رجوع للمحرر المرئي' : 'تحرير HTML'}
+            <FileCode className="h-4 w-4" />
+            عرض HTML
           </Button>
         </>
       )}

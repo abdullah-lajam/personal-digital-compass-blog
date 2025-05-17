@@ -16,10 +16,10 @@ const Hero = () => {
             مساحة شخصية للتفكير والتعلم ومشاركة المعرفة في مجالات التكنولوجيا والتعليم وإدارة الأعمال والإنسانيات
           </p>
           <div className="flex flex-wrap gap-4 justify-center md:justify-start animate-fade-up" style={{ animationDelay: '0.2s' }}>
-            <Button asChild size="lg" className="bg-white text-blog-primary hover:bg-gray-100">
+            <Button asChild className="bg-white text-blog-primary hover:bg-gray-100">
               <Link to="/about">تعرف علي <ArrowRight className="mr-2 h-4 w-4" /></Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="bg-transparent text-white border-white hover:bg-white/10">
+            <Button asChild variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
               <Link to="/ai">استكشف المقالات</Link>
             </Button>
           </div>

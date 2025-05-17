@@ -10,7 +10,7 @@ import Color from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import Underline from '@tiptap/extension-underline';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-import { createLowlight, common } from 'lowlight';
+import { common, createLowlight } from 'lowlight';
 
 export const useRichTextEditor = (
   content: string,
@@ -145,10 +145,10 @@ export const useRichTextEditor = (
         editor.chain().focus().toggleCodeBlock().run();
         break;
       case 'undo':
-        editor.chain().focus().undo().run();
+        editor.commands.undo();
         break;
       case 'redo':
-        editor.chain().focus().redo().run();
+        editor.commands.redo();
         break;
       default:
         break;

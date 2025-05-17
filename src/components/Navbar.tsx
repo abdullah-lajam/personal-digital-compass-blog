@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
         </div>
         
         <div className="flex md:hidden">
-          <Button variant="ghost" size="icon" className="mr-2" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
+          <Button variant="ghost" className="mr-2" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
           <Link to="/" className="mr-2 text-xl font-bold">المدونة</Link>
@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
           <div className="flex-1 flex justify-end items-center">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost">
                   <Settings className="h-5 w-5" />
                   <span className="sr-only">إعدادات</span>
                 </Button>

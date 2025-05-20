@@ -1,47 +1,3533 @@
-
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>كيف سيغير الذكاء الاصطناعي مستقبل العمل؟</title>
-</head>
-<body>
-    <h2>مقدمة عن الذكاء الاصطناعي والعمل</h2>
-    <p>مع تطور تقنيات الذكاء الاصطناعي بشكل متسارع، أصبح من الضروري فهم كيف ستؤثر هذه التقنيات على سوق العمل في المستقبل القريب. تشير التوقعات إلى أن الذكاء الاصطناعي سيغير طبيعة العديد من الوظائف وسيخلق أنواعًا جديدة من المهن لم تكن موجودة من قبل.</p>
+<html dir="rtl" lang="ar">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   دورة هندسة الأوامر (Prompt Engineering) - تعلم فن التواصل مع نماذج الذكاء الاصطناعي
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .course-section {
+            margin-bottom: 3rem;
+        }
+        
+        .question-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option {
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background-color: #edf2f7;
+        }
+        
+        .correct {
+            background-color: #c6f6d5;
+        }
+        
+        .incorrect {
+            background-color: #fed7d7;
+        }
+        
+        .feedback {
+            display: none;
+        }
+        
+        .prompt-example {
+            direction: ltr;
+            text-align: left;
+            background-color: #f1f5f9;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        th {
+            background-color: #f1f5f9;
+        }
+        
+        .tip-box {
+            border-right: 4px solid #3b82f6;
+            padding: 1rem;
+            background-color: #dbeafe;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-box {
+            border-right: 4px solid #f59e0b;
+            padding: 1rem;
+            background-color: #fef3c7;
+            margin: 1.5rem 0;
+        }
+        
+        .chart-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background-color: #f1f5f9;
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: #3b82f6;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+         {
+            .no-print {
+                display: none;
+            }
+            
+            .print-only {
+                display: block;
+            }
+            
+            body {
+                font-size: 12pt;
+            }
+            
+            .course-section {
+                page-break-inside: avoid;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        /* نظام الألوان المتناسق */
+        .bg-primary {
+            background-color: #4f46e5;
+        }
+        
+        .text-primary {
+            color: #4f46e5;
+        }
+        
+        .border-primary {
+            border-color: #4f46e5;
+        }
+        
+        .bg-secondary {
+            background-color: #64748b;
+        }
+        
+        .text-secondary {
+            color: #64748b;
+        }
+        
+        .border-secondary {
+            border-color: #64748b;
+        }
     
-    <h2>تأثير تقنيات الذكاء الاصطناعي على الوظائف الحالية</h2>
-    <p>تتنوع تأثيرات الذكاء الاصطناعي على الوظائف الحالية، فبعض المهن ستتأثر بشكل كبير وقد تختفي، بينما ستتطور مهن أخرى وستظهر حاجة لمهارات جديدة. يتوقع الخبراء أن الوظائف الروتينية التي تعتمد على إجراءات متكررة ستكون الأكثر عرضة للأتمتة، أما الوظائف التي تتطلب تفكيرًا إبداعيًا ومهارات اجتماعية فستكون أكثر صمودًا أمام موجة التغيير.</p>
-    
-    <h2>المهارات المطلوبة في عصر الذكاء الاصطناعي</h2>
-    <p>مع تغير طبيعة العمل، ستتغير أيضًا المهارات المطلوبة للنجاح في سوق العمل. من بين المهارات التي سيزداد الطلب عليها:</p>
-    <ul>
-        <li>التفكير النقدي وحل المشكلات المعقدة</li>
-        <li>الإبداع والابتكار</li>
-        <li>الذكاء العاطفي والتواصل الفعّال</li>
-        <li>فهم أساسيات علوم البيانات والذكاء الاصطناعي</li>
-        <li>القدرة على التعلم المستمر والتكيف مع المتغيرات</li>
+/* Added highlight style */
+.highlight { background-color: #fff59d; padding: 0 4px; }
+  </style>
+ </head>
+ <body class="px-4 py-8 md:px-8 lg:px-16 max-w-7xl mx-auto">
+  <div class="progress-container no-print">
+   <div class="progress-bar" id="progressBar">
+   </div>
+  </div>
+  <header class="text-center mb-10">
+   <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+    دورة هندسة الأوامر
+   </h1>
+   <h2 class="text-2xl md:text-3xl text-secondary mb-2">
+    Prompt Engineering
+   </h2>
+   <p class="text-lg text-gray-600">
+    تعلم فن التواصل مع نماذج الذكاء الاصطناعي
+   </p>
+   <div class="border-b-2 border-primary w-24 mx-auto mt-6 mb-8">
+   </div>
+   <p class="text-md text-gray-500">
+    بناءً على كتاب "هندسة الأوامر" للمؤلف: Lee Boonstra
+   </p>
+   <p class="text-md text-gray-400">
+    تلخيص: عبدالله سالم
+    <p class="text-md text-gray-500">
+     <a href="https://www.linkedin.com/in/abdullah-salem-lajam">
+      Linkdin: Abdullah Salem
+     </a>
+    </p>
+   </p>
+  </header>
+  <h3 class="text-xl font-bold mb-4">
+   محتويات الدورة
+  </h3>
+  <ul class="space-y-2">
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#intro">
+     1. مقدمة في هندسة الأوامر
+    </a>
+   </li>
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#llm-config">
+     2. إعدادات مخرجات نماذج اللغة الكبيرة (LLMs)
+    </a>
+   </li>
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#techniques">
+     3. تقنيات هندسة الأوامر
+    </a>
+   </li>
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#code-prompting">
+     4. هندسة أوامر البرمجة
+    </a>
+   </li>
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#multimodal">
+     5. هندسة الأوامر متعددة الوسائط
+    </a>
+   </li>
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#best-practices">
+     6. أفضل الممارسات
+    </a>
+   </li>
+   <li>
+    <a class="text-primary hover:text-indigo-800 transition" href="#summary">
+     7. الخلاصة
+    </a>
+   </li>
+  </ul>
+  <nav class="hidden bg-white fixed top-4 right-4 z-50 p-4 text-sm w-64 max-h-[80vh] overflow-y-auto rounded-lg shadow-lg border border-gray-200 no-print" id="toc">
+   <h3 class="text-xl font-bold mb-4">
+    محتويات الدورة
+   </h3>
+   <ul class="space-y-2">
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#intro">
+      1. مقدمة في هندسة الأوامر
+     </a>
+    </li>
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#llm-config">
+      2. إعدادات مخرجات نماذج اللغة الكبيرة (LLMs)
+     </a>
+    </li>
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#techniques">
+      3. تقنيات هندسة الأوامر
+     </a>
+    </li>
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#code-prompting">
+      4. هندسة أوامر البرمجة
+     </a>
+    </li>
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#multimodal">
+      5. هندسة الأوامر متعددة الوسائط
+     </a>
+    </li>
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#best-practices">
+      6. أفضل الممارسات
+     </a>
+    </li>
+    <li>
+     <a class="text-primary hover:text-indigo-800 transition" href="#summary">
+      7. الخلاصة
+     </a>
+    </li>
+   </ul>
+  </nav>
+  <main>
+   <!-- القسم الأول: المقدمة -->
+   <section class="course-section" id="intro">
+    <h2 class="text-3xl font-bold text-primary mb-6">
+     القسم الأول: مقدمة في هندسة الأوامر
+    </h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+     <h3 class="text-2xl font-bold mb-4">
+      ما هي هندسة الأوامر؟
+     </h3>
+     <p class="mb-4">
+      هندسة الأوامر (Prompt Engineering) هي فن وعلم تصميم وتحسين الأوامر النصية التي تُقدّم لنماذج اللغة الكبيرة (LLMs) مثل ChatGPT وجيميني وبارد وغيرها، لتوجيهها نحو إنتاج مخرجات دقيقة ومفيدة تتناسب مع احتياجات المستخدم.
+     </p>
+     <div class="tip-box mb-6">
+      <h4 class="font-bold">
+       لماذا تعتبر هندسة الأوامر مهمة؟
+      </h4>
+      <p>
+       تحدد الأوامر النصية ما يقوم به نموذج الذكاء الاصطناعي، وكيف يقوم به. الفرق بين أمر جيد وأمر سيئ هو الفرق بين الحصول على نتيجة مثالية أو نتيجة غير مفيدة.
+      </p>
+     </div>
+     <div class="flex flex-col md:flex-row gap-6 mb-6">
+      <div class="flex-1 bg-gray-50 p-4 rounded-lg">
+       <h4 class="font-bold text-lg mb-2 text-primary">
+        مثال لأمر ضعيف
+       </h4>
+       <div class="prompt-example border border-red-200">
+        اكتب مقال
+       </div>
+       <p class="text-sm text-gray-600 mt-2">
+        ✖️ غير محدد، لا يوفر سياقًا، لا يحدد طول المقال أو موضوعه أو الجمهور المستهدف
+       </p>
+      </div>
+      <div class="flex-1 bg-gray-50 p-4 rounded-lg">
+       <h4 class="font-bold text-lg mb-2 text-primary">
+        مثال لأمر جيد
+       </h4>
+       <div class="prompt-example border border-green-200">
+        اكتب مقالًا من 500 كلمة عن فوائد الذكاء الاصطناعي في قطاع التعليم، مع ذكر 3 أمثلة عملية عن كيفية استخدامه في الفصول الدراسية. اجعل المقال مناسبًا للمعلمين الذين ليس لديهم خلفية تقنية كبيرة، وضمِّن خاتمة تتضمن توصيات عملية.
+       </div>
+       <p class="text-sm text-gray-600 mt-2">
+        ✓ واضح، محدد، يتضمن طلبات دقيقة للمحتوى والطول والجمهور
+       </p>
+      </div>
+     </div>
+     <h3 class="text-2xl font-bold mb-4">
+      العناصر المؤثرة في جودة الأوامر
+     </h3>
+     <div class="overflow-x-auto">
+      <table class="w-full">
+       <thead>
+        <tr class="bg-gray-100">
+         <th class="border px-4 py-2">
+          العنصر
+         </th>
+         <th class="border px-4 py-2">
+          التأثير
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td class="border px-4 py-2 font-medium">
+          النموذج المستخدم
+         </td>
+         <td class="border px-4 py-2">
+          نماذج مختلفة تستجيب بشكل مختلف لنفس الأوامر بناءً على بيانات تدريبها وقدراتها
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2 font-medium">
+          اختيار الكلمات
+         </td>
+         <td class="border px-4 py-2">
+          دقة المصطلحات تؤثر على فهم النموذج للمطلوب
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2 font-medium">
+          الأسلوب والنبرة
+         </td>
+         <td class="border px-4 py-2">
+          تؤثر على شكل المخرجات وأسلوبها
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2 font-medium">
+          البنية
+         </td>
+         <td class="border px-4 py-2">
+          ترتيب المعلومات والتعليمات يحدد أولويات النموذج
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2 font-medium">
+          السياق
+         </td>
+         <td class="border px-4 py-2">
+          المعلومات الإضافية التي تساعد النموذج على فهم المهمة بشكل أفضل
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2 font-medium">
+          إعدادات النموذج
+         </td>
+         <td class="border px-4 py-2">
+          مثل درجة معامل العشوائية (Temperature) وغيرها من المعاملات التي تؤثر على المخرجات
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="warning-box mt-6">
+      <h4 class="font-bold">
+       ملاحظة مهمة
+      </h4>
+      <p>
+       هندسة الأوامر هي عملية تكرارية تتطلب التجربة والتحسين المستمر. لا تتوقع الحصول على النتيجة المثالية من أول محاولة.
+      </p>
+     </div>
+    </div>
+    <!-- اختبار القسم الأول -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+     <h3 class="text-2xl font-bold mb-4">
+      اختبار مهارات القسم الأول
+     </h3>
+     <div class="question-card p-4">
+      <p class="font-bold mb-2">
+       السؤال 1: ما هو الهدف الأساسي من هندسة الأوامر؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q1" type="radio"/>
+         برمجة نماذج الذكاء الاصطناعي
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q1" type="radio"/>
+         تصميم وتحسين الأوامر النصية للحصول على مخرجات دقيقة من نماذج اللغة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q1" type="radio"/>
+         إعادة تدريب نماذج اللغة على بيانات جديدة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q1" type="radio"/>
+         ترميز وتحويل النصوص إلى أكواد برمجية
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "تصميم وتحسين الأوامر النصية للحصول على مخرجات دقيقة من نماذج اللغة". هندسة الأوامر تركز على الطريقة التي نتواصل بها مع نماذج اللغة لتوجيهها نحو إنتاج النتائج المطلوبة بدقة.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 2: أي من العبارات التالية تصف أمراً جيداً؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q2" type="radio"/>
+         "اكتب عن التكنولوجيا"
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q2" type="radio"/>
+         "ساعدني في موضوع العلوم"
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q2" type="radio"/>
+         "اشرح مبدأ عمل السيارات الكهربائية بأسلوب مبسط لطلاب المرحلة الثانوية، مع ذكر 3 مميزات و3 تحديات، واختتم بنظرة مستقبلية عن تطور هذه التقنية"
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q2" type="radio"/>
+         "أريد معلومات شاملة الآن"
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي الخيار الثالث لأنه يتضمن: الموضوع المحدد (السيارات الكهربائية)، أسلوب الشرح (مبسط)، الجمهور المستهدف (طلاب المرحلة الثانوية)، هيكل محدد (3 مميزات و3 تحديات ونظرة مستقبلية). هذه العناصر تجعله أمراً دقيقاً وفعالاً.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 3: ما هي العناصر التي تؤثر على جودة الأوامر؟ (اختر كل ما ينطبق)
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q3_1" type="checkbox"/>
+         اختيار الكلمات والمصطلحات
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q3_2" type="checkbox"/>
+         هيكل وبنية الأمر
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q3_3" type="checkbox"/>
+         إعدادات النموذج المستخدم
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q3_4" type="checkbox"/>
+         السياق المعطى في الأمر
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q3_5" type="checkbox"/>
+         لون خلفية واجهة المستخدم
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابات الصحيحة هي: اختيار الكلمات والمصطلحات، هيكل وبنية الأمر، إعدادات النموذج المستخدم، والسياق المعطى في الأمر. جميع هذه العناصر تؤثر بشكل مباشر على كيفية فهم النموذج للمهمة وكيفية استجابته.
+       </p>
+      </div>
+     </div>
+     <button class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition" id="submitSection1">
+      تحقق من الإجابات
+     </button>
+    </div>
+   </section>
+   <!-- القسم الثاني: إعدادات مخرجات نماذج اللغة الكبيرة -->
+   <section class="course-section mt-16" id="llm-config">
+    <h2 class="text-3xl font-bold text-primary mb-6">
+     القسم الثاني: إعدادات مخرجات نماذج اللغة الكبيرة (LLMs)
+    </h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+     <h3 class="text-2xl font-bold mb-4">
+      التحكم في مخرجات النماذج
+     </h3>
+     <p class="mb-6">
+      بعد اختيار النموذج المناسب، تأتي مرحلة ضبط إعدادات هذا النموذج للتحكم في طبيعة المخرجات. هذه الإعدادات تؤثر بشكل كبير على جودة الاستجابة ومدى ملاءمتها للمهمة المطلوبة.
+     </p>
+     <h4 class="text-xl font-semibold mb-3">
+      طول المخرجات (Output Length)
+     </h4>
+     <p class="mb-4">
+      يحدد الحد الأقصى لعدد التوكنات (الوحدات النصية) التي سينتجها النموذج في استجابته. التوكنات ليست بالضرورة كلمات كاملة، بل قد تكون أجزاء من كلمات.
+     </p>
+     <div class="tip-box mb-6">
+      <h4 class="font-bold">
+       نصيحة
+      </h4>
+      <p>
+       كلما زاد طول المخرجات، زادت تكلفة استخدام النموذج وزمن الاستجابة. حدد الطول المناسب الذي يلبي احتياجاتك دون إسراف.
+      </p>
+     </div>
+     <h4 class="text-xl font-semibold mb-3">
+      عناصر التحكم في العينة (Sampling Controls)
+     </h4>
+     <p class="mb-4">
+      هي معلمات تتحكم في كيفية اختيار النموذج للكلمات التالية في النص الذي ينتجه. توجد ثلاثة معلمات رئيسية:
+     </p>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-semibold mb-3">
+       1. درجة معامل العشوائية (Temperature)
+      </h5>
+      <p class="mb-3">
+       تتحكم في مقدار العشوائية والإبداع في استجابة النموذج، وتتراوح قيمتها عادة بين 0 و1 (أو أعلى).
+      </p>
+      <div class="overflow-x-auto">
+       <table class="w-full">
+        <thead>
+         <tr class="bg-gray-100">
+          <th class="border px-4 py-2">
+           قيمة درجة معامل العشوائية
+          </th>
+          <th class="border px-4 py-2">
+           التأثير
+          </th>
+          <th class="border px-4 py-2">
+           متى تُستخدم
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td class="border px-4 py-2 text-center">
+           0
+          </td>
+          <td class="border px-4 py-2">
+           محددة جداً، دائماً نفس النتيجة للمدخل نفسه (حتمية)
+          </td>
+          <td class="border px-4 py-2">
+           للمهام التقنية، الرياضيات، الترميز، عندما تكون الإجابة الصحيحة واحدة فقط
+          </td>
+         </tr>
+         <tr>
+          <td class="border px-4 py-2 text-center">
+           0.1 - 0.3
+          </td>
+          <td class="border px-4 py-2">
+           متنبئة، محدودة العشوائية، مخرجات متناسقة
+          </td>
+          <td class="border px-4 py-2">
+           لتلخيص المستندات، الإجابات الواقعية، التحليل المنطقي
+          </td>
+         </tr>
+         <tr>
+          <td class="border px-4 py-2 text-center">
+           0.4 - 0.7
+          </td>
+          <td class="border px-4 py-2">
+           توازن بين الحتمية والعشوائية، بعض الإبداع
+          </td>
+          <td class="border px-4 py-2">
+           معظم مهام كتابة النصوص، المحادثات، الترجمة
+          </td>
+         </tr>
+         <tr>
+          <td class="border px-4 py-2 text-center">
+           0.8 - 1
+          </td>
+          <td class="border px-4 py-2">
+           عشوائية عالية، تنوع كبير، إبداع أعلى
+          </td>
+          <td class="border px-4 py-2">
+           كتابة القصص والشعر، العصف الذهني، توليد الأفكار الإبداعية
+          </td>
+         </tr>
+         <tr>
+          <td class="border px-4 py-2 text-center">
+           &gt; 1
+          </td>
+          <td class="border px-4 py-2">
+           عشوائية شديدة، احتمالية أكبر للنتائج غير المنطقية
+          </td>
+          <td class="border px-4 py-2">
+           التجريب، الإبداع غير المألوف، ولكن قد تكون النتائج غير متماسكة
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="chart-container">
+       <svg height="250" viewbox="0 0 700 250" width="700" xmlns="http://www.w3.org/2000/svg">
+        <!-- المحاور -->
+        <line stroke="black" stroke-width="2" x1="50" x2="650" y1="200" y2="200">
+        </line>
+        <line stroke="black" stroke-width="2" x1="50" x2="50" y1="50" y2="200">
+        </line>
+        <!-- عناوين المحاور -->
+        <text font-size="14" text-anchor="middle" x="350" y="230">
+         درجة معامل العشوائية (Temperature)
+        </text>
+        <text font-size="14" text-anchor="middle" transform="rotate(-90 30,125)" x="30" y="125">
+         التنوع والعشوائية
+        </text>
+        <!-- قيم درجة معامل العشوائية -->
+        <text font-size="12" text-anchor="middle" x="50" y="220">
+         0
+        </text>
+        <text font-size="12" text-anchor="middle" x="200" y="220">
+         0.3
+        </text>
+        <text font-size="12" text-anchor="middle" x="350" y="220">
+         0.6
+        </text>
+        <text font-size="12" text-anchor="middle" x="500" y="220">
+         0.9
+        </text>
+        <text font-size="12" text-anchor="middle" x="650" y="220">
+         1.2+
+        </text>
+        <!-- المنحنى -->
+        <path d="M50,200 Q150,190 200,170 T350,120 T500,70 T650,30" fill="none" stroke="#4f46e5" stroke-width="3">
+        </path>
+        <!-- مناطق الاستخدام -->
+        <rect fill="#c7d2fe" height="40" opacity="0.7" width="100" x="50" y="160">
+        </rect>
+        <rect fill="#ddd6fe" height="70" opacity="0.7" width="100" x="150" y="130">
+        </rect>
+        <rect fill="#dbeafe" height="110" opacity="0.7" width="150" x="250" y="90">
+        </rect>
+        <rect fill="#bfdbfe" height="150" opacity="0.7" width="150" x="400" y="50">
+        </rect>
+        <rect fill="#a5b4fc" height="170" opacity="0.7" width="100" x="550" y="30">
+        </rect>
+        <text font-size="10" text-anchor="middle" x="100" y="180">
+         محدد جداً
+        </text>
+        <text font-size="10" text-anchor="middle" x="200" y="160">
+         متنبئ
+        </text>
+        <text font-size="10" text-anchor="middle" x="325" y="140">
+         متوازن
+        </text>
+        <text font-size="10" text-anchor="middle" x="475" y="120">
+         إبداعي
+        </text>
+        <text font-size="10" text-anchor="middle" x="600" y="100">
+         عشوائي
+        </text>
+       </svg>
+      </div>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-semibold mb-3">
+       2. تصفية بأعلى K  (Top-K)
+      </h5>
+      <p class="mb-3">
+       يحدد عدد الاحتمالات الأعلى التي سيأخذها النموذج بعين الاعتبار عند اختيار الكلمة التالية.
+      </p>
+      <ul class="list-disc mr-6 mb-4">
+       <li>
+        قيمة منخفضة (مثل 10): تقييد الاختيارات، نتائج أكثر تركيزًا وأقل تنوعًا
+       </li>
+       <li>
+        قيمة مرتفعة (مثل 50): مجموعة أوسع من الاحتمالات، مزيد من التنوع
+       </li>
+      </ul>
+      <div class="prompt-example">
+       top_k: 10 =&gt; [الكلمات الـ 10 الأكثر احتمالاً فقط سيتم اختيار إحداها]
+top_k: 50 =&gt; [الكلمات الـ 50 الأكثر احتمالاً سيتم اختيار إحداها]
+      </div>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-semibold mb-3">
+       3. التغطية الاحتمالية (Top-P أو Nucleus Sampling)
+      </h5>
+      <p class="mb-3">
+       بدلاً من تحديد عدد ثابت من الكلمات، يحدد Top-P احتمالية تراكمية. يأخذ النموذج أقل عدد ممكن من الكلمات التي تصل احتمالاتها مجتمعةً إلى قيمة P.
+      </p>
+      <ul class="list-disc mr-6 mb-4">
+       <li>
+        قيمة منخفضة (مثل 0.3): يركز على الاحتمالات الأعلى فقط، مخرجات متوقعة
+       </li>
+       <li>
+        قيمة مرتفعة (مثل 0.9): يشمل احتمالات متنوعة أكثر، مخرجات أكثر تنوعًا
+       </li>
+      </ul>
+      <div class="prompt-example">
+       top_p: 0.3 =&gt; [سيأخذ فقط الكلمات التي تشكل معًا 30% من توزيع الاحتمالية]
+top_p: 0.9 =&gt; [سيأخذ الكلمات التي تشكل معًا 90% من توزيع الاحتمالية]
+      </div>
+     </div>
+     <h4 class="text-xl font-semibold mb-3">
+      الجمع بين الإعدادات
+     </h4>
+     <p class="mb-4">
+      يمكن الجمع بين هذه المعلمات للحصول على النتائج المطلوبة:
+     </p>
+     <div class="overflow-x-auto mb-6">
+      <table class="w-full">
+       <thead>
+        <tr class="bg-gray-100">
+         <th class="border px-4 py-2">
+          الهدف
+         </th>
+         <th class="border px-4 py-2">
+          درجة معامل العشوائية
+         </th>
+         <th class="border px-4 py-2">
+          Top-K
+         </th>
+         <th class="border px-4 py-2">
+          Top-P
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td class="border px-4 py-2">
+          إجابات دقيقة (حسابات، برمجة)
+         </td>
+         <td class="border px-4 py-2">
+          0.0 - 0.2
+         </td>
+         <td class="border px-4 py-2">
+          10
+         </td>
+         <td class="border px-4 py-2">
+          0.3
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2">
+          تلخيص وإجابات واقعية
+         </td>
+         <td class="border px-4 py-2">
+          0.2 - 0.4
+         </td>
+         <td class="border px-4 py-2">
+          20
+         </td>
+         <td class="border px-4 py-2">
+          0.5
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2">
+          محادثة طبيعية
+         </td>
+         <td class="border px-4 py-2">
+          0.5 - 0.7
+         </td>
+         <td class="border px-4 py-2">
+          40
+         </td>
+         <td class="border px-4 py-2">
+          0.7
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2">
+          كتابة إبداعية وتوليد أفكار
+         </td>
+         <td class="border px-4 py-2">
+          0.7 - 1.0
+         </td>
+         <td class="border px-4 py-2">
+          50+
+         </td>
+         <td class="border px-4 py-2">
+          0.9
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <div class="warning-box">
+      <h4 class="font-bold">
+       تذكر
+      </h4>
+      <p>
+       لا توجد إعدادات مثالية تناسب جميع المهام. يعتمد الاختيار الأمثل على طبيعة المهمة والنتائج المرجوة، وغالبًا ما يتطلب بعض التجريب للوصول إلى أفضل تكوين.
+      </p>
+     </div>
+    </div>
+    <!-- اختبار القسم الثاني -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+     <h3 class="text-2xl font-bold mb-4">
+      اختبار مهارات القسم الثاني
+     </h3>
+     <div class="question-card p-4">
+      <p class="font-bold mb-2">
+       السؤال 1: ما هو تأثير تعيين درجة معامل العشوائية (Temperature) إلى قيمة 0؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q4" type="radio"/>
+         زيادة العشوائية والإبداع في المخرجات
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q4" type="radio"/>
+         تقليل سرعة استجابة النموذج
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q4" type="radio"/>
+         جعل المخرجات حتمية ومتوقعة دائمًا، مع اختيار الكلمة الأكثر احتمالًا في كل خطوة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q4" type="radio"/>
+         إيقاف النموذج عن الاستجابة
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "جعل المخرجات حتمية ومتوقعة دائمًا، مع اختيار الكلمة الأكثر احتمالًا في كل خطوة". عندما تكون درجة معامل العشوائية 0، يختار النموذج دائمًا الكلمة الأكثر احتمالًا (الأعلى في توزيع الاحتمالات) في كل خطوة، مما يؤدي إلى نتائج متطابقة للمدخل نفسه.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 2: أي من الإعدادات التالية مناسب للحصول على إجابات دقيقة لمشكلة رياضية؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q5" type="radio"/>
+         temperature = 0.0, top_p = 0.3
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q5" type="radio"/>
+         temperature = 1.0, top_k = 50
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q5" type="radio"/>
+         temperature = 0.9, top_p = 0.9
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q5" type="radio"/>
+         temperature = 0.7, top_p = 0.7
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "temperature = 0.0, top_p = 0.3". للحصول على إجابات دقيقة في المسائل الرياضية، نحتاج إلى تقليل العشوائية وجعل النموذج يختار الاحتمالات الأعلى فقط. درجة حرارة 0 تضمن اختيار الكلمة الأكثر احتمالًا في كل خطوة، و top_p منخفضة تركز على الخيارات الأكثر احتمالًا فقط.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 3: ماذا تعني قيمة إعداد top_k = 20؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q6" type="radio"/>
+         سيجيب النموذج في 20 كلمة فقط
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q6" type="radio"/>
+         سينظر النموذج فقط إلى الـ 20 كلمة الأعلى احتمالية ويختار من بينها
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q6" type="radio"/>
+         سيستخدم النموذج 20% من قوة المعالجة المتاحة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q6" type="radio"/>
+         سيقرأ النموذج آخر 20 كلمة في المدخل
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "سينظر النموذج فقط إلى الـ 20 كلمة الأعلى احتمالية ويختار من بينها". إعداد top_k يحدد عدد الكلمات (أو التوكنات) الأعلى احتمالًا التي سيقتصر عليها النموذج عند الاختيار في كل خطوة من خطوات التوليد.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 4: أي من الإعدادات التالية أكثر ملاءمة لكتابة قصة إبداعية؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q7" type="radio"/>
+         temperature = 0.1, top_p = 0.3
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q7" type="radio"/>
+         temperature = 0.3, top_k = 10
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q7" type="radio"/>
+         temperature = 0.5, top_p = 0.5
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q7" type="radio"/>
+         temperature = 0.8, top_p = 0.9
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "temperature = 0.8, top_p = 0.9". الكتابة الإبداعية تستفيد من قيم أعلى للمعلمات التي تزيد من العشوائية والتنوع. درجة حرارة عالية (0.8) تسمح بمزيد من الإبداع، و top_p عالية (0.9) تسمح بالنظر في مجموعة أوسع من الاحتمالات.
+       </p>
+      </div>
+     </div>
+     <button class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition" id="submitSection2">
+      تحقق من الإجابات
+     </button>
+    </div>
+   </section>
+   <!-- القسم الثالث: تقنيات هندسة الأوامر -->
+   <section class="course-section mt-16" id="techniques">
+    <h2 class="text-3xl font-bold text-primary mb-6">
+     القسم الثالث: تقنيات هندسة الأوامر
+    </h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+     <h3 class="text-2xl font-bold mb-4">
+      تقنيات التوجيه الأساسية والمتقدمة
+     </h3>
+     <p class="mb-6">
+      هناك العديد من التقنيات التي يمكن استخدامها لتحسين قدرة النماذج اللغوية على فهم المهام المطلوبة وتنفيذها بدقة. سنستعرض التقنيات من البسيطة إلى المتقدمة.
+     </p>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       1. التوجيه العام (Zero-shot Prompting)
+      </h4>
+      <p class="mb-3">
+       أبسط أشكال التوجيه، حيث تقدم للنموذج طلبًا مباشرًا دون أمثلة مسبقة. النموذج يعتمد على معرفته العامة للاستجابة.
+      </p>
+      <div class="prompt-example mb-3">
+       أكتب ثلاث فوائد للتمارين الرياضية اليومية.
+      </div>
+      <p class="mb-2">
+       مميزات:
+      </p>
+      <ul class="list-disc mr-6 mb-2">
+       <li>
+        بسيط وسريع
+       </li>
+       <li>
+        لا يحتاج لأمثلة
+       </li>
+      </ul>
+      <p class="mb-2">
+       محدودية:
+      </p>
+      <ul class="list-disc mr-6 mb-2">
+       <li>
+        قد لا يفهم النموذج المهام المعقدة أو المتخصصة بشكل دقيق
+       </li>
+       <li>
+        النتائج قد تكون أقل اتساقا من التقنيات الأخرى
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       2. التوجيه بمثال واحد (One-shot) والتوجيه بأمثلة قليلة (Few-shot)
+      </h4>
+      <p class="mb-3">
+       تقديم مثال واحد أو عدة أمثلة للنموذج ليفهم النمط المطلوب قبل أن تطلب منه تنفيذ المهمة نفسها.
+      </p>
+      <div class="prompt-example mb-3">
+       المدخل: قطة
+المخرج: حيوان أليف ثديي من فصيلة السنوريات، يتميز بالرشاقة والمرونة وله أربعة أرجل وذيل.
+
+المدخل: تفاحة
+المخرج:
+      </div>
+      <p class="text-sm text-gray-600 mb-3">
+       في المثال أعلاه، قدمنا للنموذج مثالًا واحدًا عن كيفية وصف "قطة"، ثم طلبنا منه وصفًا مشابهًا لـ "تفاحة".
+      </p>
+      <p class="mb-2">
+       مميزات:
+      </p>
+      <ul class="list-disc mr-6 mb-2">
+       <li>
+        يحسن الفهم للمهام غير الشائعة أو المتخصصة
+       </li>
+       <li>
+        يوفر نماذج للتنسيق والأسلوب المطلوبين
+       </li>
+      </ul>
+      <p class="mb-2">
+       محدودية:
+      </p>
+      <ul class="list-disc mr-6 mb-2">
+       <li>
+        يستهلك مساحة أكبر من التوكنات
+       </li>
+       <li>
+        قد يتبع النمط بشكل مفرط دون فهم المحتوى
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       3. توجيه النظام، الدور، والسياق
+      </h4>
+      <h5 class="text-lg font-medium mb-2">
+       أ. توجيه النظام (System Prompting)
+      </h5>
+      <p class="mb-3">
+       تحديد قواعد أو إرشادات عامة للنموذج قبل بدء التفاعل الأساسي.
+      </p>
+      <div class="prompt-example mb-3">
+       أنت خبير تعليمي متخصص في تبسيط المفاهيم المعقدة للأطفال. جميع شروحاتك يجب أن تكون بسيطة وسهلة الفهم لطفل في عمر 8 سنوات، وتتضمن أمثلة من الحياة اليومية.
+      </div>
+      <h5 class="text-lg font-medium mb-2">
+       ب. توجيه الدور (Role Prompting)
+      </h5>
+      <p class="mb-3">
+       تحديد دور أو شخصية معينة للنموذج ليتصرف من خلالها.
+      </p>
+      <div class="prompt-example mb-3">
+       تخيل أنك خبير في علم الفلك. اشرح لي ظاهرة الثقوب السوداء بطريقة علمية دقيقة ومفصلة.
+      </div>
+      <h5 class="text-lg font-medium mb-2">
+       ج. توجيه السياق (Contextual Prompting)
+      </h5>
+      <p class="mb-3">
+       إضافة معلومات سياقية لمساعدة النموذج على فهم خلفية المهمة وظروفها.
+      </p>
+      <div class="prompt-example mb-3">
+       أنت تعد عرضًا تقديميًا لمجموعة من المستثمرين المهتمين بتكنولوجيا الذكاء الاصطناعي. الجمهور يمتلك خلفية مالية قوية لكن معرفة تقنية محدودة. اكتب مقدمة لعرضك التقديمي تشرح فيها إمكانيات الاستثمار في تقنيات الذكاء الاصطناعي بلغة واضحة، مع التركيز على العائد المالي المحتمل والمخاطر.
+      </div>
+      <p class="mb-2">
+       مميزات هذه الأنواع من التوجيه:
+      </p>
+      <ul class="list-disc mr-6 mb-2">
+       <li>
+        تحسين جودة المخرجات بشكل كبير
+       </li>
+       <li>
+        توجيه النموذج نحو أسلوب ونبرة محددين
+       </li>
+       <li>
+        تقييد المخرجات ضمن إطار معين
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       4. تقنيات التوجيه المتقدمة
+      </h4>
+      <h5 class="text-lg font-medium mb-2">
+       أ. توجيه التفكير بخطوة للخلف (Step-back Prompting)
+      </h5>
+      <p class="mb-3">
+       توجيه النموذج للتفكير بالمبادئ العامة أو النظرية قبل معالجة المشكلة المحددة.
+      </p>
+      <div class="prompt-example mb-3">
+       سؤال: ما هي الاستراتيجية الأمثل لتحسين أرباح متجر تجزئة صغير يواجه منافسة من المتاجر الكبرى عبر الإنترنت؟
+
+قبل الإجابة على السؤال المحدد، فكر في المبادئ العامة للتنافسية في أسواق التجزئة والميزات التنافسية للمتاجر الصغيرة مقابل المتاجر الكبرى. ثم قدم استراتيجية مفصلة بناءً على هذه المبادئ.
+      </div>
+      <h5 class="text-lg font-medium mb-2">
+       ب. سلسلة التفكير (Chain of Thought - COT)
+      </h5>
+      <p class="mb-3">
+       توجيه النموذج لشرح عملية التفكير خطوة بخطوة قبل الوصول إلى النتيجة النهائية.
+      </p>
+      <div class="prompt-example mb-3">
+       حل المسألة الرياضية التالية موضحًا كل خطوة في تفكيرك:
+إذا كان عمر أحمد 5 سنوات أكبر من عمر سارة، وكان عمر سارة ثلث عمر والدتها البالغ 36 عامًا، فكم يبلغ عمر أحمد؟
+      </div>
+      <h5 class="text-lg font-medium mb-2">
+       ج. الاتساق الذاتي (Self-consistency)
+      </h5>
+      <p class="mb-3">
+       توليد عدة مسارات تفكير مختلفة واختيار الإجابة الأكثر شيوعًا.
+      </p>
+      <div class="prompt-example mb-3">
+       حل المسألة الرياضية التالية. قم بتوليد ثلاث مسارات تفكير مختلفة، واذكر الإجابة النهائية لكل مسار:
+محمد اشترى 3 تفاحات و5 برتقالات، وكان سعر التفاحة 2 ريال وسعر البرتقالة 1.5 ريال. كم المبلغ الإجمالي الذي دفعه محمد؟
+      </div>
+      <h5 class="text-lg font-medium mb-2">
+       د. شجرة الأفكار (Tree of Thoughts - ToT)
+      </h5>
+      <p class="mb-3">
+       تمكن النموذج من استكشاف عدة مسارات فكرية متفرعة واتخاذ القرارات بناءً على مدى فائدتها.
+      </p>
+      <div class="prompt-example mb-3">
+       لنحل مشكلة وضع خطة تسويقية لمنتج جديد. لدينا عدة محاور يمكن التركيز عليها:
+1. التسويق عبر وسائل التواصل الاجتماعي
+2. التسويق المؤثر 
+3. الإعلانات المدفوعة
+4. تسويق المحتوى
+
+استكشف كل محور بعمق، ثم قارن بين النتائج المحتملة لكل مسار، وحدد أيها يبدو أكثر فاعلية، ولماذا. يمكنك دمج عدة محاور لتطوير استراتيجية متكاملة.
+      </div>
+      <h5 class="text-lg font-medium mb-2">
+       هـ. توجيه التفكير والفعل (Reason &amp; Act - ReAct)
+      </h5>
+      <p class="mb-3">
+       دمج التفكير المنطقي مع اتخاذ الإجراءات، مفيد خاصة عند الحاجة إلى تفاعل مع أدوات خارجية.
+      </p>
+      <div class="prompt-example mb-3">
+       مهمتك هي مساعدة المستخدم في تخطيط رحلة إلى دبي لمدة 3 أيام. في كل خطوة:
+1. فكر: حلل الموقف وحدد المعلومات المطلوبة أو القرارات اللازمة.
+2. اتخذ إجراءً: اطلب معلومات إضافية، ابحث عن خيارات، قدم توصيات.
+3. سجل نتائج الإجراء وأدمجها في التحليل.
+
+ابدأ بالتفكير في المعلومات الأساسية التي تحتاجها للتخطيط للرحلة.
+      </div>
+     </div>
+     <div class="tip-box mt-6">
+      <h4 class="font-bold">
+       نصيحة لاختيار التقنية المناسبة
+      </h4>
+      <ul class="list-disc mr-6">
+       <li>
+        للمهام البسيطة والمباشرة: استخدم Zero-shot
+       </li>
+       <li>
+        للمهام التي تتطلب تنسيقًا أو نمطًا محددًا: استخدم One-shot/Few-shot
+       </li>
+       <li>
+        للمهام المعقدة التي تتطلب تفكيرًا منطقيًا: استخدم Chain of Thought
+       </li>
+       <li>
+        للمسائل التي تتطلب دقة عالية: استخدم Self-consistency
+       </li>
+       <li>
+        للمشاكل المعقدة متعددة المسارات: استخدم Tree of Thoughts
+       </li>
+       <li>
+        للمهام التفاعلية التي تتطلب خطوات متعددة: استخدم ReAct
+       </li>
+      </ul>
+     </div>
+    </div>
+    <!-- اختبار القسم الثالث -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+     <h3 class="text-2xl font-bold mb-4">
+      اختبار مهارات القسم الثالث
+     </h3>
+     <div class="question-card p-4">
+      <p class="font-bold mb-2">
+       السؤال 1: أي من التقنيات التالية يوفر مثالًا توضيحيًا للنموذج ليفهم المهمة بشكل أفضل؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q8" type="radio"/>
+         Zero-shot prompting
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q8" type="radio"/>
+         One-shot prompting
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q8" type="radio"/>
+         System prompting
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q8" type="radio"/>
+         Role prompting
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "One-shot prompting". تقنية التوجيه بمثال واحد (One-shot) تتضمن تقديم مثال توضيحي واحد للنموذج يوضح المدخل والمخرج المتوقع، مما يساعده على فهم المهمة بشكل أفضل.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 2: ما هي التقنية الأنسب للتعامل مع مسألة رياضية معقدة تتطلب خطوات منطقية متسلسلة؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q9" type="radio"/>
+         Zero-shot prompting
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q9" type="radio"/>
+         Contextual prompting
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q9" type="radio"/>
+         Chain of Thought (CoT)
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q9" type="radio"/>
+         Role prompting
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "Chain of Thought (CoT)". سلسلة التفكير مصممة خصيصًا للمسائل التي تتطلب خطوات منطقية متسلسلة، مثل المسائل الرياضية المعقدة، حيث تسمح للنموذج بشرح تفكيره خطوة بخطوة قبل الوصول إلى الإجابة النهائية.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 3: حدد أمثلة توجيه النظام (System Prompting) من الأمثلة التالية:
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q10_1" type="checkbox"/>
+         "أجب دائمًا بأسلوب علمي دقيق مع ذكر المراجع في نهاية كل إجابة."
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q10_2" type="checkbox"/>
+         "تخيل أنك طبيب متخصص في أمراض القلب."
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q10_3" type="checkbox"/>
+         "استخدم دائمًا تنسيق JSON في إجاباتك، مع التأكد من أن الهيكل يتوافق مع المعيار التالي: {...}"
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q10_4" type="checkbox"/>
+         "أنت تتحدث مع طالب في المرحلة الابتدائية يحتاج لمساعدة في الواجبات."
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابات الصحيحة هي: "أجب دائمًا بأسلوب علمي دقيق مع ذكر المراجع في نهاية كل إجابة" و "استخدم دائمًا تنسيق JSON في إجاباتك، مع التأكد من أن الهيكل يتوافق مع المعيار التالي: {...}". توجيه النظام يحدد قواعد عامة أو إرشادات لتنسيق ومحتوى الاستجابات، بينما الخياران الآخران هما أمثلة على توجيه الدور (Role prompting) والتوجيه السياقي (Contextual prompting).
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 4: ما هي الفائدة الرئيسية لتقنية شجرة الأفكار (Tree of Thoughts) مقارنة بسلسلة التفكير (Chain of Thought)؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q11" type="radio"/>
+         أسرع في المعالجة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q11" type="radio"/>
+         أكثر فاعلية للمهام البسيطة
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q11" type="radio"/>
+         تمكن النموذج من استكشاف مسارات فكرية متعددة واختيار الأفضل
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q11" type="radio"/>
+         تتطلب توكنات أقل
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "تمكن النموذج من استكشاف مسارات فكرية متعددة واختيار الأفضل". الميزة الرئيسية لشجرة الأفكار مقارنة بسلسلة التفكير هي قدرتها على استكشاف مسارات متعددة متفرعة ومقارنتها، بدلاً من اتباع مسار خطي واحد فقط كما في سلسلة التفكير.
+       </p>
+      </div>
+     </div>
+     <button class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition" id="submitSection3">
+      تحقق من الإجابات
+     </button>
+    </div>
+   </section>
+   <!-- القسم الرابع: هندسة أوامر البرمجة -->
+   <section class="course-section mt-16" id="code-prompting">
+    <h2 class="text-3xl font-bold text-primary mb-6">
+     القسم الرابع: هندسة أوامر البرمجة
+    </h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+     <h3 class="text-2xl font-bold mb-4">
+      استخدام نماذج اللغة في مهام البرمجة
+     </h3>
+     <p class="mb-6">
+      تعتبر نماذج اللغة الكبيرة أدوات قوية للغاية في مجال البرمجة، يمكن استخدامها في كتابة الكود، شرحه، ترجمته بين لغات مختلفة، تصحيح الأخطاء، وتحسين أدائه.
+     </p>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       1. أوامر لكتابة الكود
+      </h4>
+      <p class="mb-3">
+       تساعد هذه الأوامر في توليد شيفرات برمجية من البداية استنادًا إلى متطلبات محددة.
+      </p>
+      <div class="prompt-example mb-3">
+       اكتب دالة بلغة Python تقوم بحساب مجموع أول n عدد من سلسلة فيبوناتشي. الدالة يجب أن:
+1. تأخذ عدد صحيح n كمُدخل.
+2. تتحقق من أن n أكبر من الصفر، وترجع رسالة خطأ مناسبة إذا لم يكن كذلك.
+3. تستخدم خوارزمية فعالة مع تعليقات توضيحية.
+4. توفر معالجة للاستثناءات المحتملة.
+
+مع تقديم أمثلة على استخدامها.
+      </div>
+      <p class="mb-2">
+       نصائح لتحسين أوامر كتابة الكود:
+      </p>
+      <ul class="list-disc mr-6 mb-4">
+       <li>
+        حدد اللغة البرمجية المطلوبة بشكل واضح
+       </li>
+       <li>
+        وضح الهدف الوظيفي للكود
+       </li>
+       <li>
+        حدد أي متطلبات خاصة (مثل الأداء، المكتبات، الإصدارات)
+       </li>
+       <li>
+        اطلب تعليقات توضيحية إذا كنت بحاجة إليها
+       </li>
+       <li>
+        اطلب أمثلة للاستخدام أو اختبارات وحدة
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       2. أوامر لشرح الكود
+      </h4>
+      <p class="mb-3">
+       تستخدم هذه الأوامر لفهم الشيفرات البرمجية المعقدة أو غير الواضحة.
+      </p>
+      <div class="prompt-example mb-3">
+       اشرح الكود التالي سطرًا بسطر موضحًا الغرض من كل جزء ووظيفته:
+
+```javascript
+const memoize = (fn) =&gt; {
+    const cache = {};
+    return (...args) =&gt; {
+        const key = JSON.stringify(args);
+        if (cache[key]) {
+            return cache[key];
+        }
+        const result = fn(...args);
+        cache[key] = result;
+        return result;
+    };
+};
+```
+
+بالإضافة إلى الشرح التفصيلي، وضح:
+1. ما هي تقنية البرمجة المستخدمة هنا؟
+2. ما هي فوائدها؟
+3. متى يكون استخدامها مناسبًا، ومتى قد يكون لها أضرار؟
+      </div>
+      <p class="mb-2">
+       نصائح للحصول على شرح أفضل للكود:
+      </p>
+      <ul class="list-disc mr-6 mb-4">
+       <li>
+        اطلب مستوى التفصيل المناسب (عام، مفصل، سطر بسطر)
+       </li>
+       <li>
+        حدد إذا كنت تريد تحليل الكفاءة أو التعقيد
+       </li>
+       <li>
+        اطلب شرحًا للمفاهيم المعقدة
+       </li>
+       <li>
+        اطلب تبسيط الشرح إذا كنت مبتدئًا
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       3. أوامر لترجمة الكود
+      </h4>
+      <p class="mb-3">
+       تستخدم لتحويل الشيفرة البرمجية من لغة إلى أخرى مع الحفاظ على وظائفها.
+      </p>
+      <div class="prompt-example mb-3">
+       ترجم الكود التالي المكتوب بلغة Python إلى لغة JavaScript مع الحفاظ على نفس الوظائف:
+
+```python
+def process_data(data_list):
+    result = {}
+    for item in data_list:
+        if item['status'] == 'active':
+            category = item.get('category', 'uncategorized')
+            if category not in result:
+                result[category] = []
+            result[category].append({
+                'id': item['id'],
+                'name': item['name'],
+                'value': item.get('value', 0) * 1.1
+            })
+    return result
+```
+
+استخدم أسلوب ES6 الحديث في JavaScript واشرح أي اختلافات مهمة بين التنفيذ في اللغتين.
+      </div>
+      <p class="mb-2">
+       نصائح لأوامر ترجمة الكود:
+      </p>
+      <ul class="list-disc mr-6 mb-4">
+       <li>
+        حدد اللغة المصدر واللغة الهدف بوضوح
+       </li>
+       <li>
+        اطلب استخدام إصدار محدد أو أسلوب معين في اللغة الهدف
+       </li>
+       <li>
+        اطلب توضيح الاختلافات المهمة بين اللغتين
+       </li>
+       <li>
+        اطلب التعامل مع الحالات الخاصة التي قد تختلف بين اللغات
+       </li>
+      </ul>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       4. أوامر لتصحيح ومراجعة الكود
+      </h4>
+      <p class="mb-3">
+       تستخدم لاكتشاف الأخطاء وتصحيحها، وتحسين البنية والأداء في الشيفرات البرمجية.
+      </p>
+      <div class="prompt-example mb-3">
+       راجع الكود التالي، واكتشف الأخطاء واقترح تحسينات للأداء والقابلية للصيانة:
+
+```javascript
+function sortArray(arr) {
+    for (var i = 0; i &lt; arr.length; i++) {
+        for (var j = 0; j &lt; arr.length; j++) {
+            if (arr[i] &lt; arr[j]) {
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
+function findDuplicate(arr) {
+    for (i = 0; i &lt; arr.length; i++) {
+        for (j = 0; j &lt; arr.length; j++) {
+            if (i != j &amp;&amp; arr[i] == arr[j]) {
+                return arr[i];
+            }
+        }
+    }
+    return null;
+}
+```
+
+حدد:
+1. أي أخطاء منطقية أو نحوية
+2. مشاكل الأداء والتعقيد الزمني
+3. ممارسات برمجة يمكن تحسينها
+4. اقتراحات لتحسين الكود وإعادة كتابته
+      </div>
+      <p class="mb-2">
+       نصائح لأوامر تصحيح ومراجعة الكود:
+      </p>
+      <ul class="list-disc mr-6 mb-4">
+       <li>
+        حدد نوع المراجعة المطلوبة (أخطاء، أمان، أداء، تنظيم)
+       </li>
+       <li>
+        اطلب شرحًا للمشاكل وليس فقط الحلول
+       </li>
+       <li>
+        اطلب تحليلاً للتعقيد الزمني والمكاني
+       </li>
+       <li>
+        اطلب تبسيط الكود أو تنظيمه وفقًا لمعايير محددة
+       </li>
+      </ul>
+     </div>
+     <div class="warning-box mt-6">
+      <h4 class="font-bold">
+       ملاحظة مهمة
+      </h4>
+      <p>
+       رغم قدرة نماذج اللغة على توليد أكواد برمجية مفيدة، إلا أنها قد ترتكب أخطاء أو تقترح حلولًا غير مثالية. تأكد دائمًا من مراجعة الكود وفهمه واختباره قبل استخدامه في بيئة الإنتاج.
+      </p>
+     </div>
+    </div>
+    <!-- اختبار القسم الرابع -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+     <h3 class="text-2xl font-bold mb-4">
+      اختبار مهارات القسم الرابع
+     </h3>
+     <div class="question-card p-4">
+      <p class="font-bold mb-2">
+       السؤال 1: أي من العناصر التالية يجب تضمينها عند كتابة أمر لإنشاء كود برمجي؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q12_1" type="checkbox"/>
+         تحديد اللغة البرمجية المطلوبة
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q12_2" type="checkbox"/>
+         شرح وظيفة الكود المطلوب
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q12_3" type="checkbox"/>
+         طلب تعليقات توضيحية داخل الكود
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q12_4" type="checkbox"/>
+         ذكر عدد السطور المطلوب في الكود
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابات الصحيحة هي: "تحديد اللغة البرمجية المطلوبة"، "شرح وظيفة الكود المطلوب"، و"طلب تعليقات توضيحية داخل الكود". هذه العناصر الثلاثة ضرورية لتوجيه النموذج لإنتاج كود يلبي احتياجاتك بدقة، بينما عدد السطور ليس معياراً مهماً طالما أن الكود يؤدي الوظيفة المطلوبة بكفاءة.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 2: أي من الأوامر التالية مناسب أكثر لطلب شرح كود معقد؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q13" type="radio"/>
+         "أعد كتابة هذا الكود بلغة Python."
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q13" type="radio"/>
+         "حسن أداء هذا الكود."
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q13" type="radio"/>
+         "اشرح هذا الكود سطراً بسطر مع توضيح الغرض من كل دالة والخوارزميات المستخدمة."
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q13" type="radio"/>
+         "ما هي الأخطاء في هذا الكود؟"
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "اشرح هذا الكود سطراً بسطر مع توضيح الغرض من كل دالة والخوارزميات المستخدمة". هذا الأمر يطلب تحليلاً تفصيلياً للكود ويوجه النموذج لشرح كل جزء من أجزاء الكود بوضوح، بما في ذلك الغرض من الدوال والخوارزميات المستخدمة.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 3: ما هي المعلومات المهمة التي يجب تضمينها عند طلب ترجمة كود من لغة إلى أخرى؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q14_1" type="checkbox"/>
+         تحديد اللغة المصدر واللغة الهدف
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q14_2" type="checkbox"/>
+         طلب استخدام إصدار محدد أو ميزات معينة في اللغة الهدف
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q14_3" type="checkbox"/>
+         ذكر عمر اللغة المصدر وتاريخ إطلاقها
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q14_4" type="checkbox"/>
+         طلب توضيح الاختلافات المهمة بين اللغتين في التنفيذ
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابات الصحيحة هي: "تحديد اللغة المصدر واللغة الهدف"، "طلب استخدام إصدار محدد أو ميزات معينة في اللغة الهدف"، و"طلب توضيح الاختلافات المهمة بين اللغتين في التنفيذ". هذه المعلومات تساعد النموذج على فهم المتطلبات بدقة وتوفير ترجمة فعالة للكود.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 4: ما هو الهدف الرئيسي من أوامر تصحيح ومراجعة الكود؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q15" type="radio"/>
+         إعادة كتابة الكود بلغة برمجة أخرى
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q15" type="radio"/>
+         تبسيط الكود فقط لقراءة أفضل
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q15" type="radio"/>
+         زيادة عدد التعليقات في الكود
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q15" type="radio"/>
+         اكتشاف الأخطاء وتحسين الأداء والقابلية للصيانة
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "اكتشاف الأخطاء وتحسين الأداء والقابلية للصيانة". الهدف الرئيسي من أوامر تصحيح ومراجعة الكود هو تحديد وإصلاح المشاكل المختلفة في الكود، سواء كانت أخطاء منطقية، مشاكل أداء، أو تحسين قابلية الصيانة والقراءة.
+       </p>
+      </div>
+     </div>
+     <button class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition" id="submitSection4">
+      تحقق من الإجابات
+     </button>
+    </div>
+    <section class="course-section mt-16" id="prompt-tools">
+     <h3 class="text-3xl font-bold text-primary mb-6">
+      أدوات البرومبت والأتمتة (Prompt Tools &amp; Automation)
+     </h3>
+     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h3 class="text-2xl font-bold mb-4">
+       أدوات تعزز عملك في هندسة الأوامر
+      </h3>
+      <p class="mb-6">
+       تساعدك هذه الأدوات والمكتبات في بناء سلاسل برومبت، مراقبة الأداء، وأتمتة تدفقات العمل مع نماذج اللغة الكبيرة.
+      </p>
+      <div class="overflow-x-auto mb-6">
+       <table class="min-w-full bg-white rounded-lg shadow-md text-sm">
+        <thead class="bg-gray-100">
+         <tr>
+          <th class="py-2 px-4 text-right font-semibold">
+           الأداة
+          </th>
+          <th class="py-2 px-4 text-right font-semibold">
+           الوصف
+          </th>
+          <th class="py-2 px-4 text-right font-semibold">
+           الرابط
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           LangChain
+          </td>
+          <td class="py-2 px-4">
+           إطار شهير لبناء وكلاء وسلاسل برومبت
+          </td>
+          <td class="py-2 px-4">
+           <a class="text-blue-600 underline" href="https://python.langchain.com/docs/get_started/introduction" rel="noopener" target="_blank">
+            Docs
+           </a>
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           LlamaIndex
+          </td>
+          <td class="py-2 px-4">
+           فهرسة واسترجاع المستندات داخل البرومبت
+          </td>
+          <td class="py-2 px-4">
+           <a class="text-blue-600 underline" href="https://docs.llamaindex.ai/en/latest/" rel="noopener" target="_blank">
+            Docs
+           </a>
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           PromptLayer
+          </td>
+          <td class="py-2 px-4">
+           تتبع إصدارات البرومبت وتحليل الأداء
+          </td>
+          <td class="py-2 px-4">
+           <a class="text-blue-600 underline" href="https://promptlayer.com/" rel="noopener" target="_blank">
+            Docs
+           </a>
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Flowise
+          </td>
+          <td class="py-2 px-4">
+           واجهة رسومية No‑Code لبناء تدفقات LangChain
+          </td>
+          <td class="py-2 px-4">
+           <a class="text-blue-600 underline" href="https://flowiseai.com/" rel="noopener" target="_blank">
+            Docs
+           </a>
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           AutoGen
+          </td>
+          <td class="py-2 px-4">
+           مكتبة من Microsoft لإنشاء وكلاء متعاونين
+          </td>
+          <td class="py-2 px-4">
+           <a class="text-blue-600 underline" href="https://microsoft.github.io/autogen/" rel="noopener" target="_blank">
+            Docs
+           </a>
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           GPT‑Pilot
+          </td>
+          <td class="py-2 px-4">
+           مشروع مفتوح المصدر لتوليد تطبيقات كاملة
+          </td>
+          <td class="py-2 px-4">
+           <a class="text-blue-600 underline" href="https://github.com/Pythagora-io/gpt-pilot" rel="noopener" target="_blank">
+            Docs
+           </a>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <h4 class="text-xl font-semibold mb-3">
+       مثال بايبلاين LangChain + Cloud Function
+      </h4>
+      <pre class="bg-gray-800 text-white rounded-lg p-4 overflow-x-auto text-xs"># main.py
+from langchain import OpenAI, LLMChain
+from langchain.prompts import PromptTemplate
+import os
+
+template = """أنت مساعد ذكي. أجب باختصار:
+{question}"""
+prompt = PromptTemplate(template=template, input_variables=["question"])
+
+llm = OpenAI(temperature=0.2, openai_api_key=os.environ["OPENAI_API_KEY"])
+chain = LLMChain(llm=llm, prompt=prompt)
+
+def handler(request):
+    q = request.args.get('q', 'ما هي هندسة الأوامر؟')
+    answer = chain.run(question=q)
+    return { "answer": answer }</pre>
+      <p class="mt-4 text-gray-700 italic">
+       احفظ هذا الملف كـ Cloud Function واضبط متغير البيئة OPENAI_API_KEY قبل النشر.
+      </p>
+     </div>
+    </section>
+    <div class="bg-gray-50 border-l-4 border-indigo-500 p-4 rounded mb-6">
+     <p class="italic mb-2">
+      “Prompt engineering is evolving beyond manual typing. Tools now assist in crafting, testing, refining, and even generating prompts at scale.”
+     </p>
+     <p class="text-right font-medium">
+      «تتطور هندسة الأوامر لتتجاوز الكتابة اليدوية. هناك أدوات تساعد على التصميم، والاختبار، والتحسين، وحتى توليد الأوامر بشكل آلي».
+     </p>
+     <span class="block text-sm text-gray-500">
+      (Prompt Engineering v4 – Prompt Engineering Tools)
+     </span>
+    </div>
+    <h4 class="text-xl font-semibold mt-8 mb-3">
+     1. منصّات هندسة الأوامر (Prompt Engineering Platforms)
+    </h4>
+    <div class="overflow-x-auto mb-6">
+     <table class="min-w-full bg-white rounded-lg shadow-md text-sm">
+      <thead class="bg-gray-100">
+       <tr>
+        <th class="py-2 px-4 text-right font-semibold">
+         الأداة
+        </th>
+        <th class="py-2 px-4 text-right font-semibold">
+         وصفها
+        </th>
+        <th class="py-2 px-4 text-right font-semibold">
+         الرابط
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr class="border-b">
+        <td class="py-2 px-4 font-medium">
+         PromptPerfect
+        </td>
+        <td class="py-2 px-4">
+         تحسين الأوامر تلقائيًا وتحليل الأداء
+        </td>
+        <td class="py-2 px-4">
+         <a class="text-blue-600 underline" href="https://promptperfect.jina.ai" rel="noopener" target="_blank">
+          promptperfect.jina.ai
+         </a>
+        </td>
+       </tr>
+       <tr class="border-b">
+        <td class="py-2 px-4 font-medium">
+         PromptLayer
+        </td>
+        <td class="py-2 px-4">
+         تتبع تاريخ الأوامر وتحسين التفاعل مع النماذج
+        </td>
+        <td class="py-2 px-4">
+         <a class="text-blue-600 underline" href="https://promptlayer.com" rel="noopener" target="_blank">
+          promptlayer.com
+         </a>
+        </td>
+       </tr>
+       <tr class="border-b">
+        <td class="py-2 px-4 font-medium">
+         FlowGPT
+        </td>
+        <td class="py-2 px-4">
+         منصة لتبادل الأوامر الجاهزة وتجربتها
+        </td>
+        <td class="py-2 px-4">
+         <a class="text-blue-600 underline" href="https://flowgpt.com" rel="noopener" target="_blank">
+          flowgpt.com
+         </a>
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <h4 class="text-xl font-semibold mt-8 mb-3">
+     2. مستودعات الأوامر (Prompt Libraries)
+    </h4>
+    <div class="overflow-x-auto mb-6">
+     <table class="min-w-full bg-white rounded-lg shadow-md text-sm">
+      <thead class="bg-gray-100">
+       <tr>
+        <th class="py-2 px-4 text-right font-semibold">
+         المصدر
+        </th>
+        <th class="py-2 px-4 text-right font-semibold">
+         المحتوى
+        </th>
+        <th class="py-2 px-4 text-right font-semibold">
+         الرابط
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr class="border-b">
+        <td class="py-2 px-4 font-medium">
+         Awesome ChatGPT Prompts (GitHub)
+        </td>
+        <td class="py-2 px-4">
+         قائمة ضخمة لأوامر جاهزة في مختلف المجالات
+        </td>
+        <td class="py-2 px-4">
+         <a class="text-blue-600 underline" href="https://github.com/f/awesome-chatgpt-prompts" rel="noopener" target="_blank">
+          github.com/f/awesome-chatgpt-prompts
+         </a>
+        </td>
+       </tr>
+       <tr class="border-b">
+        <td class="py-2 px-4 font-medium">
+         PromptBase
+        </td>
+        <td class="py-2 px-4">
+         سوق لبيع وشراء الأوامر عالية الجودة
+        </td>
+        <td class="py-2 px-4">
+         <a class="text-blue-600 underline" href="https://promptbase.com" rel="noopener" target="_blank">
+          promptbase.com
+         </a>
+        </td>
+       </tr>
+       <tr class="border-b">
+        <td class="py-2 px-4 font-medium">
+         PromptHero
+        </td>
+        <td class="py-2 px-4">
+         أرشيف ضخم لأوامر Midjourney وChatGPT
+        </td>
+        <td class="py-2 px-4">
+         <a class="text-blue-600 underline" href="https://prompthero.com" rel="noopener" target="_blank">
+          prompthero.com
+         </a>
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <h4 class="text-xl font-semibold mt-8 mb-3">
+     3. التكامل البرمجي (API Integration)
+    </h4>
+    <p class="mb-4">
+     يمكنك ربط واجهة OpenAI API مع أدوات أتمتة مثل Zapier أو Make.com لإنشاء أوامر ديناميكية وتشغيل الردود آليًا داخل تطبيقاتك الحالية.
+    </p>
+    <div class="bg-white rounded-lg shadow mb-6 p-4">
+     <h5 class="font-semibold mb-2">
+      مثال تطبيقي: إنشاء جدول يومي تلقائي للمستخدم
+     </h5>
+     <ol class="list-decimal pr-4 space-y-1 text-sm">
+      <li>
+       فعّل تكامل Google Calendar داخل Zapier.
+      </li>
+      <li>
+       أنشئ Zap يستقبل الأحداث الجديدة كل صباح.
+      </li>
+      <li>
+       أضف خطوة OpenAI (GPT‑4) تمرّر قائمة مهام اليوم كنصّ داخل البرومبت.
+      </li>
+      <li>
+       اطلب من النموذج صياغة جدول زمني مُحسَّن وتشذيبه إلى 300 كلمة.
+      </li>
+      <li>
+       أرسل الجدول الناتج إلى المستخدم عبر بريد إلكتروني أو Slack.
+      </li>
+     </ol>
+    </div>
+    <h4 class="text-xl font-semibold mt-8 mb-3">
+     4. مستقبل الأدوات
+    </h4>
+    <ul class="list-disc pr-5 space-y-1 text-sm">
+     <li>
+      دمج الذكاء الاصطناعي مباشرةً في أدوات الكتابة والتصميم الشائعة (Notion, Canva, Word).
+     </li>
+     <li>
+      أدوات توليد أوامر تكيفية تتعلم من سلوك المستخدم السابق.
+     </li>
+     <li>
+      لوحات تحكم مدمجة لقياس تكلفة وجودة كل برومبت تلقائيًا.
+     </li>
     </ul>
-    
-    <h2>الفرص الجديدة في عصر الذكاء الاصطناعي</h2>
-    <p>مع كل تحول تكنولوجي كبير، تظهر فرص جديدة للأفراد والشركات التي تستطيع التكيف بسرعة. سيخلق عصر الذكاء الاصطناعي وظائف جديدة مثل:</p>
-    <ul>
-        <li>مدربي الذكاء الاصطناعي (AI Trainers)</li>
-        <li>متخصصي أخلاقيات الذكاء الاصطناعي (AI Ethics Specialists)</li>
-        <li>مهندسي تجربة الذكاء الاصطناعي (AI UX Engineers)</li>
-        <li>محللي تحيز الخوارزميات (Algorithmic Bias Analysts)</li>
-        <li>مستشاري التحول الرقمي المعتمد على الذكاء الاصطناعي</li>
-    </ul>
-    
-    <h2>تحديات التكيف مع سوق العمل الجديد</h2>
-    <p>يواجه الأفراد والمؤسسات والحكومات تحديات كبيرة للتكيف مع التغييرات التي يفرضها الذكاء الاصطناعي. من أهم هذه التحديات:</p>
-    <ul>
-        <li>إعادة تأهيل القوى العاملة الحالية</li>
-        <li>تطوير أنظمة تعليمية تركز على المهارات المستقبلية</li>
-        <li>معالجة الفجوة الرقمية بين الفئات المختلفة</li>
-        <li>التعامل مع قضايا الخصوصية والأمان المرتبطة بالذكاء الاصطناعي</li>
-    </ul>
-    
-    <h2>الخلاصة</h2>
-    <p>إن التغيير الذي يحدثه الذكاء الاصطناعي في سوق العمل ليس بالضرورة أمرًا سلبيًا، بل هو تحول يحمل تحديات وفرصًا في آن واحد. المفتاح للنجاح في هذا العصر الجديد هو الاستعداد المبكر والتكيف المستمر مع المتغيرات. من خلال الاستثمار في تطوير المهارات المناسبة والانفتاح على التعلم المستمر، يمكن للأفراد والمؤسسات الاستفادة من الإمكانات الهائلة التي يوفرها الذكاء الاصطناعي لخلق مستقبل أفضل للجميع.</p>
-</body>
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded mt-6">
+     <strong>
+      تمرين تطبيقي:
+     </strong>
+     <p class="mt-2 text-sm">
+      اختر إحدى المنصّات أو المستودعات المذكورة، انسخ برومبت أعجبك، ثم عدّله ليصبح أكثر تخصصًا لك، واحفظه كنموذج شخصي لمهامك اليومية.
+     </p>
+    </div>
+   </section>
+   <!-- القسم الخامس: هندسة الأوامر متعددة الوسائط -->
+   <section class="course-section mt-16" id="multimodal">
+    <h2 class="text-3xl font-bold text-primary mb-6">
+     القسم الخامس: هندسة الأوامر متعددة الوسائط
+    </h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+     <h3 class="text-2xl font-bold mb-4">
+      التعامل مع النماذج متعددة الوسائط
+     </h3>
+     <p class="mb-6">
+      النماذج متعددة الوسائط (Multimodal Models) هي نماذج متطورة تستطيع فهم ومعالجة أنواع متعددة من البيانات مثل النصوص والصور والصوت والفيديو. هذه القدرات تفتح آفاقًا جديدة لهندسة الأوامر تتجاوز النصوص فقط.
+     </p>
+     <div class="tip-box mb-6">
+      <h4 class="font-bold">
+       ملاحظة
+      </h4>
+      <p>
+       عند العمل مع نماذج متعددة الوسائط، يجب التحقق أولاً من أنواع المدخلات التي يدعمها النموذج المستخدم، حيث تختلف النماذج في قدراتها على معالجة أنواع الوسائط المختلفة.
+      </p>
+     </div>
+     <h4 class="text-xl font-semibold mb-3">
+      أنواع النماذج متعددة الوسائط
+     </h4>
+     <div class="overflow-x-auto mb-6">
+      <table class="w-full">
+       <thead>
+        <tr class="bg-gray-100">
+         <th class="border px-4 py-2">
+          النوع
+         </th>
+         <th class="border px-4 py-2">
+          المدخلات
+         </th>
+         <th class="border px-4 py-2">
+          المخرجات
+         </th>
+         <th class="border px-4 py-2">
+          أمثلة على التطبيقات
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td class="border px-4 py-2">
+          النص إلى الصورة
+         </td>
+         <td class="border px-4 py-2">
+          نص وصفي
+         </td>
+         <td class="border px-4 py-2">
+          صورة مولدة
+         </td>
+         <td class="border px-4 py-2">
+          توليد الصور الفنية، التصميم، توضيح المفاهيم
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2">
+          الصورة إلى النص
+         </td>
+         <td class="border px-4 py-2">
+          صورة
+         </td>
+         <td class="border px-4 py-2">
+          وصف، تحليل، أو إجابات
+         </td>
+         <td class="border px-4 py-2">
+          وصف المحتوى، تحليل الصور، استخراج النصوص
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2">
+          الصورة مع النص
+         </td>
+         <td class="border px-4 py-2">
+          صورة + أسئلة/تعليمات نصية
+         </td>
+         <td class="border px-4 py-2">
+          تحليل، إجابات تفاعلية
+         </td>
+         <td class="border px-4 py-2">
+          الإجابة عن الأسئلة بناءً على الصور، تحليل المستندات
+         </td>
+        </tr>
+        <tr>
+         <td class="border px-4 py-2">
+          الفيديو مع النص
+         </td>
+         <td class="border px-4 py-2">
+          مقطع فيديو + أسئلة/تعليمات
+         </td>
+         <td class="border px-4 py-2">
+          تحليل، وصف، تلخيص
+         </td>
+         <td class="border px-4 py-2">
+          تحليل الحركة، وصف الأحداث، استخراج المعلومات
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <h4 class="text-xl font-semibold mb-3">
+      أفضل الممارسات لهندسة الأوامر متعددة الوسائط
+     </h4>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-medium mb-2">
+       1. كن محددًا في وصف المهمة
+      </h5>
+      <p class="mb-3">
+       عند العمل مع الصور أو الوسائط الأخرى، يجب توضيح بالضبط ما تريد من النموذج أن يفعله.
+      </p>
+      <div class="mb-3">
+       <h6 class="font-medium text-primary">
+        مثال أمر غير فعال:
+       </h6>
+       <div class="prompt-example mb-2">
+        صف هذه الصورة.
+       </div>
+      </div>
+      <div>
+       <h6 class="font-medium text-primary">
+        مثال أمر فعال:
+       </h6>
+       <div class="prompt-example">
+        انظر إلى هذه الصورة وقم بتحليل العناصر المرئية الأساسية فيها. حدد الأشخاص وتعابير وجوههم، والبيئة المحيطة، والألوان السائدة. ثم قم بتفسير الحالة العاطفية العامة التي تنقلها الصورة، وما يمكن أن تمثله في سياق ثقافي.
+       </div>
+      </div>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-medium mb-2">
+       2. استخدم سياقًا متكاملًا
+      </h5>
+      <p class="mb-3">
+       ربط المكونات المرئية بالعناصر النصية يعزز من فهم النموذج للمهمة المطلوبة.
+      </p>
+      <div class="prompt-example mb-3">
+       فيما يلي صورة لمخطط بياني يوضح مبيعات شركة على مدار 5 سنوات. استخدم المعلومات في هذا المخطط للإجابة على الأسئلة التالية:
+1. ما هو الاتجاه العام للمبيعات خلال هذه الفترة؟
+2. في أي عام كان هناك أكبر نمو في المبيعات مقارنة بالعام السابق؟
+3. هل هناك أي فترات انخفضت فيها المبيعات؟ ما هي هذه الفترات؟
+4. بناءً على هذه البيانات، ما هي توقعاتك للعام القادم؟
+      </div>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-medium mb-2">
+       3. اطلب تحليلًا متعدد المستويات
+      </h5>
+      <p class="mb-3">
+       وجه النموذج للنظر في مختلف جوانب الوسائط المقدمة، من الوصف السطحي إلى التحليل العميق.
+      </p>
+      <div class="prompt-example mb-3">
+       بناءً على الصورة المرفقة لصفحة من كتاب طبي:
+1. المستوى الأول - التعرف: اذكر جميع المصطلحات الطبية الظاهرة في الصورة.
+2. المستوى الثاني - التصنيف: صنف هذه المصطلحات حسب المجال الطبي (تشريح، أمراض، علاج، إلخ).
+3. المستوى الثالث - العلاقات: اشرح العلاقات بين المصطلحات المختلفة وكيف ترتبط معًا.
+4. المستوى الرابع - التطبيق: اقترح سيناريو طبي واقعي يمكن أن تُستخدم فيه هذه المعلومات.
+      </div>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h5 class="text-lg font-medium mb-2">
+       4. توجيه النموذج لمقارنة عناصر متعددة
+      </h5>
+      <p class="mb-3">
+       عند العمل مع عدة صور أو وسائط، وجه النموذج لإجراء مقارنة محددة.
+      </p>
+      <div class="prompt-example mb-3">
+       أمامك صورتان لتصميمين مختلفين لواجهة مستخدم لتطبيق جوال. قارن بينهما من حيث:
+1. تنظيم العناصر والتسلسل البصري
+2. سهولة الاستخدام والوصول للوظائف الأساسية
+3. الجاذبية البصرية والألوان
+4. ملاءمة التصميم للجمهور المستهدف (مستخدمون عاديون)
+
+ثم قدم توصيتك حول أي التصميمين أفضل مع شرح السبب، واقترح تحسينًا واحدًا على الأقل لكل تصميم.
+      </div>
+     </div>
+     <div class="warning-box mt-6">
+      <h4 class="font-bold">
+       تحديات هندسة الأوامر متعددة الوسائط
+      </h4>
+      <ul class="list-disc mr-6">
+       <li>
+        قد يكون لدى النموذج فهم محدود للتفاصيل الدقيقة في الصور المعقدة
+       </li>
+       <li>
+        بعض النماذج قد تواجه صعوبة في فهم النصوص داخل الصور بدقة
+       </li>
+       <li>
+        قد يكون الفهم السياقي أو الثقافي للصور محدودًا
+       </li>
+       <li>
+        تختلف قدرات النماذج بشكل كبير فيما يتعلق بمعالجة أنواع مختلفة من الوسائط
+       </li>
+      </ul>
+     </div>
+    </div>
+    <!-- اختبار القسم الخامس -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+     <h3 class="text-2xl font-bold mb-4">
+      اختبار مهارات القسم الخامس
+     </h3>
+     <div class="question-card p-4">
+      <p class="font-bold mb-2">
+       السؤال 1: ما الذي يميز النماذج متعددة الوسائط عن نماذج اللغة التقليدية؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q16" type="radio"/>
+         أنها تعمل فقط مع الصور دون النصوص
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q16" type="radio"/>
+         أنها أبطأ دائمًا في المعالجة
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q16" type="radio"/>
+         قدرتها على معالجة وفهم أنواع متعددة من البيانات مثل النصوص، الصور، الصوت والفيديو
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q16" type="radio"/>
+         أنها تعمل دائمًا دون اتصال بالإنترنت
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "قدرتها على معالجة وفهم أنواع متعددة من البيانات مثل النصوص، الصور، الصوت والفيديو". ما يميز النماذج متعددة الوسائط هو قدرتها على التعامل مع أنواع مختلفة من المدخلات والجمع بينها في فهم وتحليل متكامل، بينما النماذج اللغوية التقليدية تقتصر على النصوص فقط.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 2: أي من الأوامر التالية يعد الأكثر فاعلية عند العمل مع نموذج يمكنه معالجة الصور؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q17" type="radio"/>
+         "ماذا ترى في هذه الصورة؟"
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q17" type="radio"/>
+         "اشرح هذه الصورة بالتفصيل"
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q17" type="radio"/>
+         "في هذه الصورة لرسم بياني من تقرير مالي، حدد القيم الرئيسية للمبيعات في الربع الأخير، وقارنها بالربع السابق، واشرح الاتجاه العام للبيانات"
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q17" type="radio"/>
+         "أخبرني بمحتوى الصورة"
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "في هذه الصورة لرسم بياني من تقرير مالي، حدد القيم الرئيسية للمبيعات في الربع الأخير، وقارنها بالربع السابق، واشرح الاتجاه العام للبيانات". هذا الأمر هو الأكثر فاعلية لأنه يوفر سياقًا واضحًا (رسم بياني مالي)، ويحدد مهام محددة (تحديد قيم، إجراء مقارنة، شرح اتجاه)، مما يسمح للنموذج بتقديم تحليل موجه وذي قيمة.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 3: ما هي أفضل الممارسات عند كتابة أوامر للنماذج متعددة الوسائط؟ (اختر كل ما ينطبق)
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q18_1" type="checkbox"/>
+         كن محددًا في وصف المهمة المطلوبة
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q18_2" type="checkbox"/>
+         استخدم سياقًا متكاملًا يربط بين العناصر المرئية والنصية
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q18_3" type="checkbox"/>
+         اطلب تحليلًا متعدد المستويات للوسائط المقدمة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q18_4" type="checkbox"/>
+         تجنب الإشارة إلى تفاصيل محددة في الصورة
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابات الصحيحة هي: "كن محددًا في وصف المهمة المطلوبة"، "استخدم سياقًا متكاملًا يربط بين العناصر المرئية والنصية"، و"اطلب تحليلًا متعدد المستويات للوسائط المقدمة". هذه الممارسات تساعد على توجيه النموذج بشكل أفضل للحصول على نتائج أكثر دقة وفائدة. على العكس، الإشارة إلى تفاصيل محددة في الصورة يمكن أن تساعد النموذج على التركيز على العناصر المهمة.
+       </p>
+      </div>
+     </div>
+     <div class="question-card p-4 mt-4">
+      <p class="font-bold mb-2">
+       السؤال 4: أي من التحديات التالية تواجه النماذج متعددة الوسائط؟
+      </p>
+      <div class="options space-y-2">
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q19" type="radio"/>
+         عدم القدرة على معالجة النصوص نهائيًا
+        </label>
+       </div>
+       <div class="option" data-correct="true">
+        <label>
+         <input class="ml-2" name="q19" type="radio"/>
+         فهم محدود للتفاصيل الدقيقة في الصور المعقدة والنصوص داخل الصور
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q19" type="radio"/>
+         عدم إمكانية تحليل أكثر من صورة واحدة في كل مرة
+        </label>
+       </div>
+       <div class="option" data-correct="false">
+        <label>
+         <input class="ml-2" name="q19" type="radio"/>
+         عدم القدرة على فهم الألوان في الصور
+        </label>
+       </div>
+      </div>
+      <div class="feedback mt-2 p-2 bg-blue-50 rounded">
+       <p>
+        الإجابة الصحيحة هي "فهم محدود للتفاصيل الدقيقة في الصور المعقدة والنصوص داخل الصور". هذه من أهم التحديات التي تواجه النماذج متعددة الوسائط الحالية، حيث قد تواجه صعوبة في التقاط التفاصيل الدقيقة أو فهم النصوص المضمنة في الصور بدقة، خاصة إذا كانت بدقة منخفضة أو مكتوبة بخط غير واضح.
+       </p>
+      </div>
+     </div>
+     <button class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-indigo-700 transition" id="submitSection5">
+      تحقق من الإجابات
+     </button>
+    </div>
+   </section>
+   <!-- القسم السادس: أفضل الممارسات -->
+   <section class="course-section mt-16" id="best-practices">
+    <h2 class="text-3xl font-bold text-primary mb-6">
+     القسم السادس: أفضل الممارسات في هندسة الأوامر
+    </h2>
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+     <h3 class="text-2xl font-bold mb-4">
+      الممارسات المثلى لتحسين أدائك في هندسة الأوامر
+     </h3>
+     <p class="mb-6">
+      سنستعرض في هذا القسم مجموعة من أفضل الممارسات التي يمكن أن تساعدك على تحسين أدائك في هندسة الأوامر والحصول على نتائج أفضل من نماذج الذكاء الاصطناعي.
+     </p>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       1. توفير أمثلة
+      </h4>
+      <p class="mb-3">
+       "المثال هو أفضل معلم." تقديم أمثلة واضحة للنموذج يعتبر من أقوى الطرق للحصول على النتائج المرجوة.
+      </p>
+      <div class="prompt-example mb-3">
+       حول النصوص التالية إلى تغريدات جذابة بحد أقصى 280 حرفًا:
+
+المثال 1:
+نص: "دراسة جديدة تشير إلى أن ممارسة التمارين لمدة 30 دقيقة يوميًا يمكن أن تحسن الذاكرة وتعزز القدرات الإدراكية."
+تغريدة: "🧠 30 دقيقة فقط من التمارين يوميًا = ذاكرة أقوى وتفكير أوضح! دراسة جديدة تكشف عن العلاقة القوية بين النشاط البدني والصحة العقلية. حان وقت الحركة! #صحة_العقل"
+
+حول هذه النصوص:
+1. "تشير دراسة نُشرت في المجلة العلمية أن تناول الشوكولاتة الداكنة باعتدال يمكن أن يساعد في خفض ضغط الدم ويحسن صحة القلب بسبب محتواها من مضادات الأكسدة."
+
+2. "أظهرت بيانات المناخ العالمية أن شهر يوليو 2023 كان أكثر الشهور حرارة منذ بدء تسجيل درجات معامل العشوائية قبل 150 عامًا، مما يؤكد المخاوف بشأن تسارع تغير المناخ."
+      </div>
+     </div>
+     <div class="bg-gray-50 p-6 rounded-lg mb-6">
+      <h4 class="text-xl font-semibold mb-3">
+       2. التصميم بالبساطة
+      </h4>
+      <p class="mb-3">
+       الأوامر البسيطة والواضحة غالبًا ما تكون أكثر فعالية من الأوامر المعقدة والمربكة.
+      </p>
+      <div class="overflow-x-auto mb-3">
+       <table class="w-full">
+        <thead>
+         <tr class="bg-gray-100">
+          <th class="border px-4 py-2">
+           أمر معقد
+          </th>
+          <th class="border px-4 py-2">
+           أمر بسيط ومحسن
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td class="border px-4 py-2 text-sm">
+           أرغب في الحصول على معلومات تفصيلية وشاملة عن كيفية تنفيذ استراتيجية تسويقية عبر منصات التواصل الاجتماعي المختلفة مثل فيسبوك وتويتر وإنستجرام ولينكد إن، مع التركيز على الأساليب والتكتيكات والإحصاءات المتعلقة بالفعالية وأفضل الممارسات والأخطاء التي يجب تجنبها، بما في ذلك أمثلة وحالات دراسية من شركات ناجحة، وكيف يمكن قياس أداء الحملات التسويقية وتحسينها بشكل مستمر.
+          </td>
+          <td class="border px-4 py-2 text-sm">
+           اكتب دليلاً من 5 خطوات لإنشاء استرات
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- ===== Appended from code_course.txt (Start) ===== -->
+   <section class="course-section mt-16" id="advanced-practices">
+    <div class="max-w-4xl mx-auto bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg shadow-md p-6 text-white">
+     <div class="flex items-center mb-4">
+      <i class="fas fa-quote-right text-3xl text-white opacity-50 ml-3">
+      </i>
+      <p class="text-lg">
+       "لا تحتاج أن تكون عالم بيانات أو مهندس تعلم آلي - يمكن للجميع كتابة البرومبت."
+      </p>
+     </div>
+     <p class="text-right italic">
+      - مقتبس من الكتاب
+     </p>
+    </div>
+    <main class="max-w-4xl mx-auto">
+     <!-- القسم التمهيدي -->
+     <section class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-4 section-title">
+       هندسة البرومبت
+      </h2>
+      <p class="mb-4">
+       هندسة البرومبت هي عملية تصميم مدخلات عالية الجودة توجه نماذج اللغة الكبيرة (LLMs) لإنتاج مخرجات دقيقة. تتضمن هذه العملية تحسين طول البرومبت وتقييم أسلوب الكتابة وهيكل البرومبت بالنسبة للمهمة المطلوبة.
+      </p>
+      <div class="example-box p-4 mb-6">
+       <h3 class="font-bold mb-2 text-indigo-700">
+        تذكر دائماً:
+       </h3>
+       <p>
+        البرومبت الجيد يمثل حجر الأساس للحصول على نتائج دقيقة ومفيدة من نماذج اللغة الكبيرة. كلما كان البرومبت أكثر وضوحاً ودقة، كلما كانت النتائج أفضل.
+       </p>
+      </div>
+      <div class="bg-gray-100 p-4 rounded-lg mb-4">
+       <h3 class="font-bold mb-2">
+        مفاهيم أساسية:
+       </h3>
+       <ul class="list-disc list-inside space-y-1">
+        <li>
+         البرومبت هو المدخل المقدم للنموذج لإنتاج استجابة أو تنبؤ.
+        </li>
+        <li>
+         هندسة البرومبت هي عملية تكرارية تتطلب التجريب والتحسين المستمر.
+        </li>
+        <li>
+         البرومبت غير المناسب يمكن أن يؤدي إلى استجابات غامضة أو غير دقيقة.
+        </li>
+       </ul>
+      </div>
+     </section>
+     <!-- أفضل الممارسات الرئيسية -->
+     <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6 section-title">
+       أفضل ممارسات هندسة البرومبت
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+       <!-- بطاقة الممارسة 1 -->
+       <div class="practice-card bg-white rounded-lg shadow-md p-5 hover:shadow-lg">
+        <div class="flex items-center mb-3">
+         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 mr-3">
+          <i class="fas fa-list-ol">
+          </i>
+         </div>
+         <h3 class="font-bold text-lg">
+          تقديم الأمثلة
+         </h3>
+        </div>
+        <p class="text-gray-600 mb-3">
+         توفير أمثلة (one-shot / few-shot) داخل البرومبت يساعد النموذج على فهم النمط المطلوب ومحاكاته.
+        </p>
+        <div class="bg-indigo-50 p-3 rounded text-sm">
+         <span class="font-bold">
+          نصيحة:
+         </span>
+         استخدم 3-5 أمثلة متنوعة وعالية الجودة للمهام المعقدة.
+        </div>
+       </div>
+       <!-- بطاقة الممارسة 2 -->
+       <div class="practice-card bg-white rounded-lg shadow-md p-5 hover:shadow-lg">
+        <div class="flex items-center mb-3">
+         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 mr-3">
+          <i class="fas fa-feather-alt">
+          </i>
+         </div>
+         <h3 class="font-bold text-lg">
+          التصميم ببساطة
+         </h3>
+        </div>
+        <p class="text-gray-600 mb-3">
+         يجب أن تكون البرومبتات موجزة وواضحة وسهلة الفهم للمستخدم والنموذج معاً.
+        </p>
+        <div class="bg-indigo-50 p-3 rounded text-sm">
+         <span class="font-bold">
+          قاعدة:
+         </span>
+         إذا كان البرومبت مربكاً بالنسبة لك، فسيكون مربكاً للنموذج أيضاً.
+        </div>
+       </div>
+       <!-- بطاقة الممارسة 3 -->
+       <div class="practice-card bg-white rounded-lg shadow-md p-5 hover:shadow-lg">
+        <div class="flex items-center mb-3">
+         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 mr-3">
+          <i class="fas fa-bullseye">
+          </i>
+         </div>
+         <h3 class="font-bold text-lg">
+          التحديد الدقيق للمخرجات
+         </h3>
+        </div>
+        <p class="text-gray-600 mb-3">
+         كن محدداً بشأن المخرجات المرغوبة. التعليمات المختصرة قد لا توجه النموذج بشكل كافٍ.
+        </p>
+        <div class="bg-indigo-50 p-3 rounded text-sm">
+         <span class="font-bold">
+          مثال:
+         </span>
+         "أنشئ مقال مدونة من 3 فقرات حول أفضل 5 أجهزة ألعاب فيديو" بدلاً من "أنشئ مقال حول أجهزة ألعاب الفيديو".
+        </div>
+       </div>
+       <!-- بطاقة الممارسة 4 -->
+       <div class="practice-card bg-white rounded-lg shadow-md p-5 hover:shadow-lg">
+        <div class="flex items-center mb-3">
+         <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 mr-3">
+          <i class="fas fa-check-circle">
+          </i>
+         </div>
+         <h3 class="font-bold text-lg">
+          استخدام التعليمات بدلاً من القيود
+         </h3>
+        </div>
+        <p class="text-gray-600 mb-3">
+         ركز على التعليمات الإيجابية بدلاً من القيود السلبية لتوجيه النموذج بشكل أفضل.
+        </p>
+        <div class="bg-indigo-50 p-3 rounded text-sm">
+         <span class="font-bold">
+          أفضل:
+         </span>
+         "تحدث فقط عن الجهاز والشركة المصنعة والسنة والمبيعات" بدلاً من "لا تذكر أسماء الألعاب".
+        </div>
+       </div>
+      </div>
+      <!-- المزيد من الممارسات في جدول -->
+      <div class="bg-white rounded-lg shadow-md p-6 overflow-x-auto">
+       <h3 class="font-bold text-xl mb-4 text-indigo-700">
+        ممارسات رئيسية إضافية
+       </h3>
+       <table class="w-full">
+        <thead>
+         <tr>
+          <th class="w-1/4">
+           الممارسة
+          </th>
+          <th class="w-1/2">
+           الوصف
+          </th>
+          <th class="w-1/4">
+           نصيحة عملية
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td class="font-bold">
+           التحكم في عدد الرموز (tokens)
+          </td>
+          <td>
+           ضبط طول الاستجابة المولدة من النموذج.
+          </td>
+          <td>
+           يمكن ضبطه في الإعدادات أو داخل البرومبت: "اشرح الفيزياء الكمية في رسالة بطول تغريدة".
+          </td>
+         </tr>
+         <tr>
+          <td class="font-bold">
+           استخدام المتغيرات في البرومبت
+          </td>
+          <td>
+           جعل البرومبت ديناميكياً وقابلاً لإعادة الاستخدام مع مدخلات مختلفة.
+          </td>
+          <td>
+           استخدم متغيرات لتخزين المعلومات المتكررة وجعل البرومبت أكثر مرونة في التطبيقات البرمجية.
+          </td>
+         </tr>
+         <tr>
+          <td class="font-bold">
+           التجريب مع صيغ المدخلات
+          </td>
+          <td>
+           استكشاف تنسيقات وأساليب كتابة مختلفة للبرومبت.
+          </td>
+          <td>
+           جرب البرومبت على شكل سؤال، أو بيان، أو تعليمات للحصول على نتائج مختلفة.
+          </td>
+         </tr>
+         <tr>
+          <td class="font-bold">
+           مزج الفئات في أمثلة few-shot
+          </td>
+          <td>
+           خلط فئات الاستجابة المحتملة في أمثلة few-shot.
+          </td>
+          <td>
+           ابدأ بـ 6 أمثلة few-shot وابدأ باختبار الدقة من هناك.
+          </td>
+         </tr>
+         <tr>
+          <td class="font-bold">
+           التكيف مع تحديثات النموذج
+          </td>
+          <td>
+           البقاء على اطلاع بتغييرات هيكل النموذج والبيانات والقدرات.
+          </td>
+          <td>
+           جرب إصدارات النموذج الأحدث وعدل البرومبتات للاستفادة من ميزات النموذج الجديدة.
+          </td>
+         </tr>
+         <tr>
+          <td class="font-bold">
+           التجريب مع تنسيقات المخرجات
+          </td>
+          <td>
+           استخدام تنسيقات هيكلية مثل JSON أو XML للمهام غير الإبداعية.
+          </td>
+          <td>
+           البنية المنظمة تجبر النموذج على الالتزام بهيكل محدد وتقليل الهلوسة.
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </section>
+     <!-- ممارسات خاصة -->
+     <section class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-4 section-title">
+       أفضل ممارسات تقنيات محددة
+      </h2>
+      <div class="mb-6">
+       <h3 class="text-xl font-bold mb-3 text-indigo-700">
+        ممارسات Chain of Thought (CoT)
+       </h3>
+       <div class="bg-gray-50 p-4 rounded-lg">
+        <ul class="list-disc list-inside space-y-2">
+         <li>
+          وضع الإجابة
+          <span class="highlight">
+           بعد خطوات التفكير
+          </span>
+          ضروري لأن توليد التفكير يغير الرموز التي يحصل عليها النموذج عند التنبؤ بالإجابة النهائية.
+         </li>
+         <li>
+          ضبط درجة معامل العشوائية
+          <span class="highlight">
+           (temperature)
+          </span>
+          على 0 عند استخدام CoT.
+         </li>
+         <li>
+          CoT مبني على فك التشفير الجشع (greedy decoding)، للتنبؤ بالكلمة التالية في تسلسل على أساس أعلى احتمال.
+         </li>
+        </ul>
+       </div>
+      </div>
+      <div class="mb-6">
+       <h3 class="text-xl font-bold mb-3 text-indigo-700">
+        توثيق محاولات البرومبت
+       </h3>
+       <p class="mb-3">
+        من الأهمية بمكان توثيق محاولات البرومبت الخاصة بك بتفاصيل كاملة حتى تتمكن من معرفة ما نجح وما لم ينجح مع مرور الوقت.
+       </p>
+       <div class="diagram-box border border-gray-300 rounded-lg p-4">
+        <h4 class="font-bold mb-2">
+         نموذج مقترح لتوثيق البرومبت:
+        </h4>
+        <div class="overflow-x-auto">
+         <table class="w-full">
+          <thead>
+           <tr>
+            <th>
+             الهدف
+            </th>
+            <th>
+             النموذج
+            </th>
+            <th>
+             درجة معامل العشوائية
+            </th>
+            <th>
+             البرومبت
+            </th>
+            <th>
+             المخرجات
+            </th>
+            <th>
+             الملاحظات
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td>
+             تصنيف المراجعات
+            </td>
+            <td>
+             gemini-pro
+            </td>
+            <td>
+             0.1
+            </td>
+            <td>
+             صنف المراجعة كإيجابية أو سلبية أو محايدة...
+            </td>
+            <td>
+             إيجابية
+            </td>
+            <td>
+             يعمل بشكل جيد مع المراجعات القصيرة
+            </td>
+           </tr>
+           <tr>
+            <td>
+             تصنيف المراجعات
+            </td>
+            <td>
+             gemini-pro
+            </td>
+            <td>
+             0.5
+            </td>
+            <td>
+             صنف المراجعة كإيجابية أو سلبية أو محايدة مع شرح سبب...
+            </td>
+            <td>
+             إيجابية - لأن...
+            </td>
+            <td>
+             يقدم تفسيرات أفضل لكن يستغرق وقتًا أطول
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+       </div>
+      </div>
+     </section>
+     <!-- أمثلة عملية -->
+     <section class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-6 section-title">
+       أمثلة عملية
+      </h2>
+      <div class="mb-8">
+       <h3 class="text-xl font-bold mb-3 text-indigo-700">
+        مثال 1: تحسين البرومبت
+       </h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-red-50 p-4 rounded-lg">
+         <h4 class="font-bold text-red-700 mb-2">
+          قبل التحسين:
+         </h4>
+         <p class="text-gray-800 mb-2">
+          أنا في نيويورك الآن، وأود معرفة المزيد حول المواقع الرائعة. أنا مع طفلين عمرهما 3 سنوات. أين يجب أن نذهب خلال إجازتنا؟
+         </p>
+         <p class="text-red-600 text-sm">
+          ⨯ غير واضح ومفرط في التفاصيل غير الضرورية
+         </p>
+        </div>
+        <div class="bg-green-50 p-4 rounded-lg">
+         <h4 class="font-bold text-green-700 mb-2">
+          بعد التحسين:
+         </h4>
+         <p class="text-gray-800 mb-2">
+          تصرف كمرشد سياحي. صف أماكن رائعة للزيارة في مانهاتن بنيويورك مع طفل عمره 3 سنوات.
+         </p>
+         <p class="text-green-600 text-sm">
+          ✓ موجز، محدد، وواضح مع تحديد دور للنموذج
+         </p>
+        </div>
+       </div>
+      </div>
+      <div class="mb-8">
+       <h3 class="text-xl font-bold mb-3 text-indigo-700">
+        مثال 2: استخدام تنسيق JSON
+       </h3>
+       <div class="example-box p-4">
+        <h4 class="font-bold mb-2">
+         البرومبت:
+        </h4>
+        <pre class="bg-gray-100 p-3 rounded-lg text-sm overflow-x-auto">
+صنّف مراجعات الأفلام كإيجابية أو سلبية أو محايدة. أعد استجابة JSON صالحة:
+
+المراجعة: "فيلم Her هو دراسة مزعجة تكشف الاتجاه الذي تتجه إليه البشرية إذا سُمح للذكاء الاصطناعي بالتطور دون رقابة. إنه مزعج لدرجة أنني لم أستطع متابعته."
+
+المخطط: ```
+MOVIE: {
+  "sentiment": String "POSITIVE" | "NEGATIVE" | "NEUTRAL",
+  "name": String
+}
+MOVIE REVIEWS: {
+  "movie_reviews": [MOVIE]
+}
+```
+
+استجابة JSON:
+                    </pre>
+        <h4 class="font-bold mt-4 mb-2">
+         المخرجات:
+        </h4>
+        <pre class="bg-gray-800 text-green-400 p-3 rounded-lg text-sm overflow-x-auto">
+```
+{
+  "movie_reviews": [
+    {
+      "sentiment": "NEGATIVE",
+      "name": "Her"
+    }
+  ]
+}
+```
+                    </pre>
+       </div>
+      </div>
+      <div>
+       <h3 class="text-xl font-bold mb-3 text-indigo-700">
+        مثال 3: Chain of Thought (CoT)
+       </h3>
+       <div class="example-box p-4">
+        <h4 class="font-bold mb-2">
+         البرومبت:
+        </h4>
+        <pre class="bg-gray-100 p-3 rounded-lg text-sm overflow-x-auto">
+عندما كان عمري 3 سنوات، كان عمر شريكي 3 أضعاف عمري. الآن، عمري 20 عامًا. كم عمر شريكي؟ دعنا نفكر خطوة بخطوة.
+                    </pre>
+        <h4 class="font-bold mt-4 mb-2">
+         المخرجات:
+        </h4>
+        <pre class="bg-gray-800 text-green-400 p-3 rounded-lg text-sm overflow-x-auto">
+1. لنفترض أن عمري الحالي هو "x" سنة.
+2. عندما كان عمري 3 سنوات، كان عمري 3 سنوات.
+3. كان عمر شريكي في ذلك الوقت 3 أضعاف عمري، مما يعني أن عمر شريكي كان 3 * 3 = 9 سنوات.
+4. الآن، عمري 20 عامًا، مما يعني أن عمري زاد بمقدار 20 - 3 = 17 سنة منذ أن كان عمري 3 سنوات.
+5. بما أن عمر شريكي كان 9 سنوات عندما كان عمري 3 سنوات، وقد زاد عمري بمقدار 17 سنة، فيجب أن يكون عمر شريكي قد زاد أيضًا بمقدار 17 سنة.
+6. لذا، عمر شريكي الآن هو 9 + 17 = 26 عامًا.
+                    </pre>
+       </div>
+      </div>
+     </section>
+     <!-- تقنيات البرومبت المختلفة -->
+     <section class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-6 section-title">
+       تقنيات البرومبت الرئيسية
+      </h2>
+      <div class="diagram-box border border-gray-300 rounded-lg p-4 mb-6">
+       <h3 class="font-bold text-center mb-4 text-indigo-700">
+        تقنيات البرومبت التي تمت مناقشتها في الكتاب
+       </h3>
+       <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-search text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Zero Prompting
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-list-ol text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Few-shot Prompting
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-cogs text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          System Prompting
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-user-tie text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Role Prompting
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-sitemap text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Contextual Prompting
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-step-backward text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Step-back Prompting
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-link text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Chain of Thought
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-check-double text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Self-consistency
+         </p>
+        </div>
+        <div class="bg-indigo-50 p-3 rounded-lg text-center">
+         <i class="fas fa-tree text-indigo-600 mb-2">
+         </i>
+         <p class="font-bold">
+          Tree of Thoughts
+         </p>
+        </div>
+       </div>
+      </div>
+      <p class="text-gray-700 mb-4">
+       يقدم الكتاب مجموعة متنوعة من تقنيات البرومبت التي يمكن استخدامها حسب المهمة والمتطلبات الخاصة بك. كل تقنية لها مزاياها وحالات استخدام محددة.
+      </p>
+      <div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
+       <h3 class="font-bold mb-2 text-yellow-700">
+        ملاحظة مهمة:
+       </h3>
+       <p>
+        هندسة البرومبت عملية تكرارية. قم بإنشاء واختبار برومبتات مختلفة، وتحليل وتوثيق النتائج. حسّن البرومبت بناءً على أداء النموذج. استمر في التجريب حتى تحقق النتيجة المرجوة. عندما تغير نموذجًا أو تكوين نموذج، ارجع واستمر في التجريب مع البرومبتات المستخدمة سابقًا.
+       </p>
+      </div>
+     </section>
+     <!-- الخلاصة -->
+     <section class="mb-10" id="cheat-sheet">
+      <h2 class="text-2xl font-bold mb-4 section-title">
+       بطاقة مرجعية سريعة (Cheat‑Sheet)
+      </h2>
+      <div class="overflow-x-auto">
+       <table class="min-w-full bg-white rounded-lg shadow-md text-sm">
+        <thead class="bg-gray-100">
+         <tr>
+          <th class="py-2 px-4 text-left font-semibold">
+           Technique
+          </th>
+          <th class="py-2 px-4 text-left font-semibold">
+           شرح مختصر (Brief)
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Temperature
+          </td>
+          <td class="py-2 px-4">
+           درجة معامل العشوائية (Temperature)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Top‑K
+          </td>
+          <td class="py-2 px-4">
+           تصفية بأعلى K (Top‑K)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Top‑P
+          </td>
+          <td class="py-2 px-4">
+           التغطية الاحتمالية (Top‑P)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Zero‑Shot
+          </td>
+          <td class="py-2 px-4">
+           بدون أمثلة (Zero‑Shot)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Few‑Shot
+          </td>
+          <td class="py-2 px-4">
+           بأمثلة قليلة (Few‑Shot)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Chain of Thought
+          </td>
+          <td class="py-2 px-4">
+           سلسلة التفكير (Chain of Thought)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           ReAct
+          </td>
+          <td class="py-2 px-4">
+           الاستدلال والفعل (Reason+Act) (ReAct)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Tree of Thoughts
+          </td>
+          <td class="py-2 px-4">
+           شجرة الأفكار (Tree of Thoughts)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Automatic Prompt Engineering
+          </td>
+          <td class="py-2 px-4">
+           الهندسة التلقائية للأوامر (Automatic Prompt Engineering)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Role Prompt
+          </td>
+          <td class="py-2 px-4">
+           أمر تحديد الدور (Role Prompt)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           System Prompt
+          </td>
+          <td class="py-2 px-4">
+           أمر النظام (System Prompt)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Instruction Prompt
+          </td>
+          <td class="py-2 px-4">
+           أمر التعليمات (Instruction Prompt)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Context Prompt
+          </td>
+          <td class="py-2 px-4">
+           أمر السياق (Context Prompt)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Self‑Consistency
+          </td>
+          <td class="py-2 px-4">
+           الاتساق الذاتي (Self‑Consistency)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Step‑Back
+          </td>
+          <td class="py-2 px-4">
+           خطوة للخلف (Step‑Back)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Code Prompting
+          </td>
+          <td class="py-2 px-4">
+           توجيه الشيفرة (Code Prompting)
+          </td>
+         </tr>
+         <tr class="border-b">
+          <td class="py-2 px-4 font-medium">
+           Multimodal Prompting
+          </td>
+          <td class="py-2 px-4">
+           توجيه متعدد الوسائط (Multimodal Prompting)
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </section>
+     <h2 class="text-2xl font-bold mb-4 section-title">
+      خلاصة الكتاب
+     </h2>
+     <section class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <p class="mb-4">
+       ناقش هذا الكتاب هندسة البرومبت وتعلمنا مجموعة متنوعة من تقنيات البرومبت، مثل:
+      </p>
+      <ul class="list-disc list-inside space-y-1 mb-4">
+       <li>
+        التوجيه العام (Zero Prompting)
+       </li>
+       <li>
+        التوجيه بأمثلة قليلة (Few-shot Prompting)
+       </li>
+       <li>
+        توجيه النظام (System Prompting)
+       </li>
+       <li>
+        توجيه الدور (Role Prompting)
+       </li>
+       <li>
+        توجيه السياق (Contextual Prompting)
+       </li>
+       <li>
+        توجيه التفكير بخطوة للخلف (Step-back Prompting)
+       </li>
+       <li>
+        سلسلة التفكير (Chain of Thought)
+       </li>
+       <li>
+        الاتساق الذاتي (Self-consistency)
+       </li>
+       <li>
+        شجرة الأفكار (Tree of Thoughts)
+       </li>
+       <li>
+        الاستدلال والعمل (ReAct)
+       </li>
+      </ul>
+      <p class="mb-4">
+       كما نظرنا في طرق أتمتة البرومبتات ثم ناقش الكتاب تحديات الذكاء الاصطناعي التوليدي مثل المشكلات التي يمكن أن تحدث عندما تكون البرومبتات غير كافية. وختمنا بأفضل الممارسات حول كيفية أن تصبح مهندس برومبت أفضل.
+      </p>
+      <div class="bg-blue-50 p-4 rounded-lg">
+       <h3 class="font-bold mb-2 text-blue-700">
+        الرسالة الرئيسية:
+       </h3>
+       <p>
+        هندسة البرومبت تتطلب التجريب والممارسة. اتباع المبادئ والإرشادات المذكورة في هذا الكتاب سيساعدك على تطوير برومبتات أكثر فعالية لنماذج اللغة الكبيرة وتحقيق نتائج أفضل.
+       </p>
+      </div>
+     </section>
+     <!-- اختبر نفسك -->
+     <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6 section-title">
+       اختبر معلوماتك
+      </h2>
+      <div class="space-y-6">
+       <!-- سؤال 1 -->
+       <div class="question-card bg-white rounded-lg shadow-md p-5">
+        <h3 class="font-bold text-lg mb-3">
+         1. ما هي ميزة توثيق محاولات البرومبت المختلفة؟
+        </h3>
+        <div class="space-y-2">
+         <div class="flex items-center">
+          <input class="ml-2" id="q1a" name="q1" type="radio"/>
+          <label for="q1a">
+           أ. تقليل وقت تطوير البرومبت
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q1b" name="q1" type="radio"/>
+          <label for="q1b">
+           ب. زيادة تعقيد البرومبت
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q1c" name="q1" type="radio"/>
+          <label for="q1c">
+           ج. مساعدتك على تتبع ما نجح وما لم ينجح مع مرور الوقت
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q1d" name="q1" type="radio"/>
+          <label for="q1d">
+           د. تقليل عدد الرموز المستخدمة
+          </label>
+         </div>
+        </div>
+        <div class="mt-3 hidden bg-green-50 p-2 rounded">
+         <p class="font-bold text-green-700">
+          الإجابة الصحيحة: ج
+         </p>
+         <p class="text-sm">
+          توثيق محاولات البرومبت يساعدك على تتبع ما نجح وما لم ينجح مع مرور الوقت، ويسهل عليك العودة إليها في المستقبل.
+         </p>
+        </div>
+       </div>
+       <!-- سؤال 2 -->
+       <div class="question-card bg-white rounded-lg shadow-md p-5">
+        <h3 class="font-bold text-lg mb-3">
+         2. أي من التالي يُعد مثالاً على "استخدام التعليمات بدلاً من القيود"؟
+        </h3>
+        <div class="space-y-2">
+         <div class="flex items-center">
+          <input class="ml-2" id="q2a" name="q2" type="radio"/>
+          <label for="q2a">
+           أ. "لا تقم بإنشاء محتوى غير لائق"
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q2b" name="q2" type="radio"/>
+          <label for="q2b">
+           ب. "اكتب مقالة حول ألعاب الفيديو وتجنب ذكر أسماء الشركات"
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q2c" name="q2" type="radio"/>
+          <label for="q2c">
+           ج. "عليك ألا تتجاوز 100 كلمة"
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q2d" name="q2" type="radio"/>
+          <label for="q2d">
+           د. "اكتب مقالة من فقرة واحدة تتناول فقط المميزات التقنية للمنتج"
+          </label>
+         </div>
+        </div>
+        <div class="mt-3 hidden bg-green-50 p-2 rounded">
+         <p class="font-bold text-green-700">
+          الإجابة الصحيحة: د
+         </p>
+         <p class="text-sm">
+          المثال د يوجه النموذج بشكل إيجابي بما يجب فعله (كتابة فقرة واحدة عن المميزات التقنية) بدلاً من تقديم قيود سلبية.
+         </p>
+        </div>
+       </div>
+       <!-- سؤال 3 -->
+       <div class="question-card bg-white rounded-lg shadow-md p-5">
+        <h3 class="font-bold text-lg mb-3">
+         3. ما هي درجة معامل العشوائية (temperature) الموصى بها عند استخدام Chain of Thought؟
+        </h3>
+        <div class="space-y-2">
+         <div class="flex items-center">
+          <input class="ml-2" id="q3a" name="q3" type="radio"/>
+          <label for="q3a">
+           أ. 0
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q3b" name="q3" type="radio"/>
+          <label for="q3b">
+           ب. 0.5
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q3c" name="q3" type="radio"/>
+          <label for="q3c">
+           ج. 0.7
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q3d" name="q3" type="radio"/>
+          <label for="q3d">
+           د. 1
+          </label>
+         </div>
+        </div>
+        <div class="mt-3 hidden bg-green-50 p-2 rounded">
+         <p class="font-bold text-green-700">
+          الإجابة الصحيحة: أ
+         </p>
+         <p class="text-sm">
+          عند استخدام Chain of Thought، يُنصح بضبط درجة معامل العشوائية على 0 لأنه يعتمد على فك التشفير الجشع وعادة ما يكون هناك إجابة صحيحة واحدة.
+         </p>
+        </div>
+       </div>
+       <!-- سؤال 4 -->
+       <div class="question-card bg-white rounded-lg shadow-md p-5">
+        <h3 class="font-bold text-lg mb-3">
+         4. كم عدد الأمثلة المقترح البدء بها في تقنية few-shot؟
+        </h3>
+        <div class="space-y-2">
+         <div class="flex items-center">
+          <input class="ml-2" id="q4a" name="q4" type="radio"/>
+          <label for="q4a">
+           أ. 2
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q4b" name="q4" type="radio"/>
+          <label for="q4b">
+           ب. 4
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q4c" name="q4" type="radio"/>
+          <label for="q4c">
+           ج. 6
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q4d" name="q4" type="radio"/>
+          <label for="q4d">
+           د. 10
+          </label>
+         </div>
+        </div>
+        <div class="mt-3 hidden bg-green-50 p-2 rounded">
+         <p class="font-bold text-green-700">
+          الإجابة الصحيحة: ج
+         </p>
+         <p class="text-sm">
+          قاعدة جيدة هي البدء بـ 6 أمثلة في تقنية few-shot والبدء في اختبار الدقة من هناك.
+         </p>
+        </div>
+       </div>
+       <!-- سؤال 5 -->
+       <div class="question-card bg-white rounded-lg shadow-md p-5">
+        <h3 class="font-bold text-lg mb-3">
+         5. ما هي الفائدة الرئيسية من طلب مخرجات بتنسيق JSON أو XML؟
+        </h3>
+        <div class="space-y-2">
+         <div class="flex items-center">
+          <input class="ml-2" id="q5a" name="q5" type="radio"/>
+          <label for="q5a">
+           أ. زيادة عدد الرموز المستخدمة
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q5b" name="q5" type="radio"/>
+          <label for="q5b">
+           ب. تقليل إبداعية النموذج
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q5c" name="q5" type="radio"/>
+          <label for="q5c">
+           ج. إجبار النموذج على إنشاء بنية ومحتوى منظم وتقليل الهلوسة
+          </label>
+         </div>
+         <div class="flex items-center">
+          <input class="ml-2" id="q5d" name="q5" type="radio"/>
+          <label for="q5d">
+           د. تحسين سرعة استجابة النموذج
+          </label>
+         </div>
+        </div>
+        <div class="mt-3 hidden bg-green-50 p-2 rounded">
+         <p class="font-bold text-green-700">
+          الإجابة الصحيحة: ج
+         </p>
+         <p class="text-sm">
+          طلب مخرجات بتنسيق JSON أو XML يجبر النموذج على الالتزام ببنية محددة مما يقلل من احتمالية الهلوسة ويسهل استخراج البيانات برمجياً.
+         </p>
+        </div>
+       </div>
+       <button class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" id="checkAnswers">
+        تحقق من إجاباتك
+       </button>
+      </div>
+     </section>
+     <!-- نشاط عملي -->
+     <section class="mb-12 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-bold mb-4 section-title">
+       نشاط عملي
+      </h2>
+      <p class="mb-4">
+       قم بتطبيق ما تعلمته من هذه الدورة بإكمال النشاط التالي:
+      </p>
+      <div class="bg-gray-50 p-4 rounded-lg">
+       <h3 class="font-bold mb-3">
+        تحسين البرومبت:
+       </h3>
+       <p class="mb-3">
+        فيما يلي برومبت غير فعال. استخدم المبادئ التي تعلمتها لتحسينه:
+       </p>
+       <div class="bg-red-50 p-3 rounded-lg mb-4">
+        <p class="text-gray-800">
+         أريد معرفة عن الذكاء الاصطناعي وكيف يعمل وما هي استخداماته وإيجابياته وسلبياته وهل سيسيطر على العالم؟ وما هو مستقبله؟
+        </p>
+       </div>
+       <div class="border border-dashed border-gray-300 p-3 rounded-lg">
+        <p class="text-gray-500 italic">
+         اكتب البرومبت المحسّن هنا...
+        </p>
+       </div>
+       <div class="mt-4 text-sm text-gray-600">
+        <p class="font-bold">
+         نصائح للتحسين:
+        </p>
+        <ul class="list-disc list-inside">
+         <li>
+          قسّم السؤال المركب إلى أسئلة أصغر وأكثر تركيزًا
+         </li>
+         <li>
+          حدد النمط المرغوب للمخرجات (مقال، نقاط، جدول مقارنة، إلخ)
+         </li>
+         <li>
+          حدد دورًا للنموذج (مثلاً: خبير تقني، أستاذ جامعي، صحفي علمي)
+         </li>
+         <li>
+          أضف تعليمات محددة حول طول ومستوى المحتوى المطلوب
+         </li>
+        </ul>
+       </div>
+      </div>
+     </section>
+    </main>
+    <footer class="max-w-4xl mx-auto bg-indigo-900 text-white p-6 rounded-lg shadow-md text-center">
+     <h2 class="text-xl font-bold mb-3">
+      هندسة البرومبت: رحلة التعلم المستمر
+     </h2>
+     <p class="mb-4">
+      تذكر أن هندسة البرومبت عملية تكرارية تتطلب التجريب والتحسين المستمر. استمر في الممارسة واستكشاف تقنيات جديدة.
+     </p>
+     <div class="flex justify-center space-x-4 mb-4">
+      <div class="bg-indigo-800 p-3 rounded-lg flex flex-col items-center mx-2">
+       <i class="fas fa-graduation-cap text-2xl mb-2">
+       </i>
+       <p class="text-sm">
+        استمر في التعلم
+       </p>
+      </div>
+      <div class="bg-indigo-800 p-3 rounded-lg flex flex-col items-center mx-2">
+       <i class="fas fa-sync-alt text-2xl mb-2">
+       </i>
+       <p class="text-sm">
+        جرّب باستمرار
+       </p>
+      </div>
+      <div class="bg-indigo-800 p-3 rounded-lg flex flex-col items-center mx-2">
+       <i class="fas fa-clipboard-list text-2xl mb-2">
+       </i>
+       <p class="text-sm">
+        وثّق نتائجك
+       </p>
+      </div>
+     </div>
+     <p class="text-sm text-indigo-200">
+      ملخص مقتبس من كتاب "هندسة البرومبت" للمؤلف Lee Boonstra
+     </p>
+     <p class="text-md text-gray-400">
+      تلخيص: عبدالله سالم
+      <p class="text-md text-gray-500">
+       <a href="https://www.linkedin.com/in/abdullah-salem-lajam">
+        Linkdin: Abdullah Salem
+       </a>
+      </p>
+     </p>
+    </footer>
+    <script>
+     document.getElementById('checkAnswers').addEventListener('click', function() {
+            const answers = document.querySelectorAll('.question-card');
+            answers.forEach(answer => {
+                const feedback = answer.querySelector('.mt-3');
+                feedback.classList.remove('hidden');
+            });
+        });
+    </script>
+   </section>
+  </main>
+ </body>
 </html>
+<!-- ===== Appended from code_course.txt (End) ===== -->
+<button class="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg z-50" onclick="toggleToc()">
+ 📑
+</button>
+<script>
+ function toggleToc() {
+    const toc = document.getElementById('toc');
+    toc.classList.toggle('hidden');
+  }
+</script>
